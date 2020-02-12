@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Jay &amp; Kay Café</string>
+    <string name="coffee">Order Coffee</string>
+    <string name="coffeeLunch">Order Coffee &amp; Lunch</string>
+    <string name="lunch">Order Lunch</string>
+    <string name="americano">Americano</string>
+    <string name="latte">Latte</string>
+    <string name="cappacino">Cappacino</string>
+    <string name="flat_white">Flat White</string>
+    <string name="hot_choc">Hot Chocolate</string>
+    <string name="tea">Tea</string>
+    <string name="herbal_tea">Herbal Tea</string>
+    <string name="order">Place Order</string>
+    <string name="a_descript">A single shot of espresso combined with four ounces of hot water</string>
+    <string name="extended_fab_content_desc">efab</string>
+    <string name="extended_fab_label">efab</string>
+    <string name="total">Total:</string>
+    <string name="orderTotal">€ Total</string>
+    <string name="AmericanoPrice">€2.50</string>
+    <string name="CappaPrice">€2.80</string>
+    <string name="lattePrice">€2.60</string>
+    <string name="sitIn">Sit In</string>
+    <string name="takeaway">TakeAway</string>
+    <string name="smallCup">Small</string>
+    <string name="largeCup">Large</string>
+    <string name="chooseQuantity">Choose Your Quantity</string>
+    <string name="chooseSize">Choose Size</string>
+    <string name="where">Sit in JK café or TakeAway?</string>
+    <string name="hint_collect_time">___:___</string>
+    <string name="collectTime">Collection Time:</string>
+</resources>
