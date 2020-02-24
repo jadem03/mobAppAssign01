@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorMedium</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay">style</style>
+
+    <style name="AppTheme.PopupOverlay">style2</style>
+
 </resources>

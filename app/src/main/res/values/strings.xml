@@ -11,7 +11,8 @@
     <string name="tea">Tea</string>
     <string name="herbal_tea">Herbal Tea</string>
     <string name="order">Place Order</string>
-    <string name="a_descript">A single shot of espresso combined with four ounces of hot water</string>
+    <string name="a_descript">A single shot of espresso
+        combined with four ounces of hot water</string>
     <string name="extended_fab_content_desc">efab</string>
     <string name="extended_fab_label">efab</string>
     <string name="total">Total:</string>
@@ -23,9 +24,35 @@
     <string name="takeaway">TakeAway</string>
     <string name="smallCup">Small</string>
     <string name="largeCup">Large</string>
-    <string name="chooseQuantity">Choose Your Quantity</string>
-    <string name="chooseSize">Choose Size</string>
+    <string name="chooseQuantity">Coffee Quantity</string>
+    <string name="chooseSize">Coffee Size</string>
     <string name="where">Sit in JK café or TakeAway?</string>
-    <string name="hint_collect_time">___:___</string>
-    <string name="collectTime">Collection Time:</string>
+    <string name="collectTime">___ : ___</string>
+    <string name="collection_Time">Collection Time:</string>
+    <string name="when_want_coffee">When do you want your Coffee?</string>
+    <string name="error">Open time 07:00am - 06:00pm</string>
+    <string name="action_receipts">Your Receipts</string>
+    <string name="action_order">Order</string>
+    <string name="menu_order">Order Coffee</string>
+    <string name="menu_receipts">View Receipts</string>
+    <string name="menu_favourites">Your favourites</string>
+    <string name="menu_about">About JK Café</string>
+    <string name="nav_header_desc">nav_header</string>
+    <string name="nav_header_subtitle">Your Profile</string>
+    <string name="nav_header_title">JK Café Menu</string>
+    <string name="menu_share">share</string>
+    <string name="menu_send">send</string>
+    <string name="navigation_drawer_open">Open Drawer</string>
+    <string name="navigation_drawer_close">Close Drawer</string>
+    <string name="action_home">Home</string>
+    <string name="welcome">Welcome to JK Café</string>
+    <string name="menu_home">Home</string>
+    <string name="action_about">About Us</string>
+    <string name="about">We are JK Café,
+     your new favourite local coffee chain.
+        Use our app to order your coffee ahead of time.
+        Don\'t worry about forgetting your JK loyalty card.
+        We virtually stamp it for you every time you buy a coffee online!</string>
+    <string name="delete_all">Delete All</string>
+
 </resources>

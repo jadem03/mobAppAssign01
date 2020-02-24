@@ -1,13 +1,17 @@
 package ie.wit.jk_cafe.main
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import ie.wit.jk_cafe.R
+import android.app.Application
+import android.util.Log
+import ie.wit.jk_cafe.models.OrderMemStore
+import ie.wit.jk_cafe.models.OrderStore
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Application() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_order_main_page)
+    lateinit var ordersStore: OrderStore
+
+    override fun onCreate() {
+        super.onCreate()
+        ordersStore = OrderMemStore()
+        Log.v("Order","JK Café App started")
     }
 }
