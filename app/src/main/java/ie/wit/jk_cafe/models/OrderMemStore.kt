@@ -10,7 +10,7 @@ internal fun getId(): Long {
 
 class OrderMemStore : OrderStore {
 
-        val orders = ArrayList<OrderModel>()
+        var orders = ArrayList<OrderModel>()
 
         override fun findAll(): List<OrderModel> {
             return orders

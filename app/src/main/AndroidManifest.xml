@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ie.wit.jk_cafe">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".main.MainActivity"
         android:allowBackup="true"
@@ -24,5 +25,4 @@
         <activity android:name=".fragments.ReceiptsFragment"></activity>
         <activity android:name=".fragments.AboutFragment"></activity>
     </application>
-
 </manifest>

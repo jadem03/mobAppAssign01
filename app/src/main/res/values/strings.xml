@@ -54,5 +54,6 @@
         Don\'t worry about forgetting your JK loyalty card.
         We virtually stamp it for you every time you buy a coffee online!</string>
     <string name="delete_all">Delete All</string>
+    <string name="messageLoading">Please wait while the Orders are Loading..</string>
 
 </resources>

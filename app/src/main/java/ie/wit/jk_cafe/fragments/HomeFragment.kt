@@ -11,8 +11,6 @@ import androidx.fragment.app.FragmentTransaction
 import ie.wit.jk_cafe.R
 import kotlinx.android.synthetic.main.fragment_home.view.orderCoffeeBtn
 
-
-
 class HomeFragment : Fragment() {
 
     lateinit var ft: FragmentTransaction

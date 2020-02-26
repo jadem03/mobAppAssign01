@@ -1,8 +1,7 @@
 package ie.wit.jk_cafe.fragments
 
-import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.TimePickerDialog
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,23 +11,58 @@ import android.widget.Toast
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.main.MainActivity
 import ie.wit.jk_cafe.models.OrderModel
-import kotlinx.android.synthetic.main.card_order.view.*
-import kotlinx.android.synthetic.main.fragment_order.*
+import ie.wit.jk_cafe.utils.*
 import kotlinx.android.synthetic.main.fragment_order.view.*
 import kotlinx.android.synthetic.main.fragment_order.view.americano_quantity
 import kotlinx.android.synthetic.main.fragment_order.view.coffeeCup
 import kotlinx.android.synthetic.main.fragment_order.view.collectTime
 import kotlinx.android.synthetic.main.fragment_order.view.where
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
-class OrderFragment : Fragment() {
+class OrderFragment : Fragment(), AnkoLogger, Callback<List<OrderModel>> {
 
     lateinit var app: MainActivity
+    lateinit var loader: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         app=activity?.application as MainActivity
+    }
+
+    override fun onFailure(call: Call<List<OrderModel>>, t: Throwable) {
+        info("Retrofit Error : $t.message")
+        serviceUnavailableMessage(activity!!)
+        hideLoader(loader)
+    }
+
+    override fun onResponse(
+        call: Call<List<OrderModel>>,
+        response: Response<List<OrderModel>>
+    ) {
+        serviceAvailableMessage(activity!!)
+        info("Retrofit JSON = $response.raw()")
+        app.ordersStore.orders = response.body() as ArrayList<OrderModel>
+        updateUI()
+        hideLoader(loader)
+    }
+
+    fun updateUI() {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getAllOrders()
+    }
+
+    fun getAllOrders() {
+        showLoader(loader, "Downloading Receipts List")
+        var callGetAll = app.cafeService.getall()
+        callGetAll.enqueue(this)
     }
 
     override fun onCreateView(
@@ -37,6 +71,7 @@ class OrderFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val orderFragment = inflater.inflate(R.layout.fragment_order, container, false)
+        loader = createLoader(activity!!)
         activity?.title = getString(R.string.action_order)
 
         orderFragment.americano_quantity.minValue = 1
@@ -80,6 +115,7 @@ class OrderFragment : Fragment() {
         return orderFragment
     }
 
+
     companion object {
         @JvmStatic
         fun newInstance() =
@@ -108,4 +144,5 @@ class OrderFragment : Fragment() {
             fr?.commit()
         }
     }
+
 }
