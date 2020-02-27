@@ -11,6 +11,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,30 +33,24 @@
                 <TextView
                     android:id="@+id/americano"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:paddingStart="10dp"
                     android:text="@string/americano"
                     android:textSize="18sp" />
-            </TableRow>
 
-            <TableRow>
-
-                <TextView
-                    android:layout_width="199dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="40dp"
-                    android:padding="10dp"
-                    android:text="@string/a_descript" />
-
-                <NumberPicker
+                <EditText
                     android:id="@+id/americano_quantity"
-                    style="@android:style/Widget.Material.NumberPicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp" />
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/quantity_hint"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:maxLength="10"
+                    android:background="@color/colorWhite"
+                    android:outlineAmbientShadowColor="@color/colorPrimaryDark"/>
             </TableRow>
 
             <TextView
@@ -184,7 +179,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/Total"
+                    android:id="@+id/total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"

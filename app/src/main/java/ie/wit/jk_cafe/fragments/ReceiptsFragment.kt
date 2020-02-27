@@ -10,12 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.adapters.DeleteListener
 import ie.wit.jk_cafe.adapters.OrderAdapter
+import ie.wit.jk_cafe.adapters.ReceiptListener
 import ie.wit.jk_cafe.main.MainActivity
 import ie.wit.jk_cafe.models.OrderModel
 import kotlinx.android.synthetic.main.fragment_receipts.*
 import kotlinx.android.synthetic.main.fragment_receipts.view.recyclerView
+import org.jetbrains.anko.AnkoLogger
 
-class ReceiptsFragment : Fragment(), DeleteListener {
+class ReceiptsFragment : Fragment(), DeleteListener, ReceiptListener, AnkoLogger {
 
     lateinit var app: MainActivity
 
@@ -31,7 +33,7 @@ class ReceiptsFragment : Fragment(), DeleteListener {
         // Inflate the layout for this fragment
         val receiptsFragment = inflater.inflate(R.layout.fragment_receipts, container, false)
         receiptsFragment.recyclerView.setLayoutManager(LinearLayoutManager(activity))
-        receiptsFragment.recyclerView.adapter = OrderAdapter(app.ordersStore.findAll(), this)
+        receiptsFragment.recyclerView.adapter = OrderAdapter(app.ordersStore.findAll(), this, this)
         return receiptsFragment
     }
 
@@ -41,6 +43,14 @@ class ReceiptsFragment : Fragment(), DeleteListener {
         var fr = getFragmentManager()?.beginTransaction()
         fr?.replace(R.id.homeFrame, ReceiptsFragment())
         fr?.commit()
+    }
+
+    override fun onReceiptListener(order: OrderModel)
+    {
+        var fr = getFragmentManager()?.beginTransaction()
+        fr?.replace(R.id.homeFrame, OrderFragment())
+        fr?.commit()
+
     }
 
     companion object {

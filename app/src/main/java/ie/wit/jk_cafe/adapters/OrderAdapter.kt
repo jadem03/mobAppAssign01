@@ -14,8 +14,14 @@ interface DeleteListener
     fun onDeleteClick(order:OrderModel)
 }
 
+interface ReceiptListener
+{
+    fun onReceiptListener(order:OrderModel)
+}
+
 class OrderAdapter constructor(private var orders: List<OrderModel>,
-                               private val deleteListener: DeleteListener
+                               private val deleteListener: DeleteListener,
+                               private val receiptListener: ReceiptListener
 )
     : RecyclerView.Adapter<OrderAdapter.MainHolder>() {
 
@@ -31,7 +37,7 @@ class OrderAdapter constructor(private var orders: List<OrderModel>,
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val order = orders[holder.adapterPosition]
-        holder.bind(order, deleteListener)
+        holder.bind(order, deleteListener, receiptListener)
     }
 
     override fun getItemCount(): Int = orders.size
@@ -40,13 +46,15 @@ class OrderAdapter constructor(private var orders: List<OrderModel>,
 
         fun bind(
             order: OrderModel,
-        deleteListener: DeleteListener
+        deleteListener: DeleteListener,
+            receiptListener: ReceiptListener
         ) {
             itemView.where.text = order.where
             itemView.coffeeCup.text = order.coffeeCup
             itemView.orderTotal.text = order.total
             itemView.collectTime.text = order.collectTime
             itemView.deleteBtn.setOnClickListener{deleteListener.onDeleteClick(order)}
+            itemView.setOnClickListener{receiptListener.onReceiptListener(order)}
             itemView.imageIcon.setImageResource(R.mipmap.coffee_cup02)
 
         }
