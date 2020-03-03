@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "594066922833",
+    "firebase_url": "https://jkcafe-443e8.firebaseio.com",
+    "project_id": "jkcafe-443e8",
+    "storage_bucket": "jkcafe-443e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594066922833:android:4bac9833cc21b6721d8770",
+        "android_client_info": {
+          "package_name": "ie.wit.jk_cafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594066922833-r1rl1u2rjs1qrciugfk8uit3htlcgbf1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ie.wit.jk_cafe",
+            "certificate_hash": "9e88d22b38ab54b4bcb21a5c5b4ffbb94d3113fd"
+          }
+        },
+        {
+          "client_id": "594066922833-h90es9apq28d7nr3nmsa4u7ehk327lb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1__EI0sVVFFYUyin6mdI_Ve2vNYlPDVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594066922833-h90es9apq28d7nr3nmsa4u7ehk327lb1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

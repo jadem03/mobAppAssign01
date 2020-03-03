@@ -1,5 +1,6 @@
 package ie.wit.jk_cafe.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,12 +10,14 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.adapters.DeleteListener
 import ie.wit.jk_cafe.adapters.OrderAdapter
 import ie.wit.jk_cafe.fragments.*
 import ie.wit.jk_cafe.main.MainActivity
 import ie.wit.jk_cafe.models.OrderModel
+import ie.wit.jk_cafe.signUp_logIn.LoginActivity
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.fragment_receipts.*
 import kotlinx.android.synthetic.main.home.*
@@ -30,7 +33,7 @@ class Home : AppCompatActivity(),
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.home)
-            setSupportActionBar(toolbar)
+            setSupportActionBar(this.toolbar)
 
             app = application as MainActivity
 
@@ -58,7 +61,7 @@ class Home : AppCompatActivity(),
                 R.id.nav_order -> navigateTo(OrderFragment.newInstance())
                 R.id.nav_receipts -> navigateTo(ReceiptsFragment.newInstance())
                 R.id.nav_about -> navigateTo(AboutFragment.newInstance())
-
+                R.id.nav_logout -> onLogOut()
                 else -> toast("You Selected Something Else")
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -76,11 +79,17 @@ class Home : AppCompatActivity(),
                 R.id.action_home -> navigateTo(HomeFragment.newInstance())
                 R.id.action_order -> navigateTo(OrderFragment.newInstance())
                 R.id.action_receipts -> navigateTo(ReceiptsFragment.newInstance())
-
                 else -> toast("You Selected Something Else")
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             return true
+        }
+
+        private fun onLogOut(){
+            FirebaseAuth.getInstance().signOut()
+            toast("Logged Out")
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
 
         override fun onBackPressed() {

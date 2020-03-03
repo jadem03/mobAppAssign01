@@ -33,6 +33,7 @@
     <string name="error">Open time 07:00am - 06:00pm</string>
     <string name="action_receipts">Your Receipts</string>
     <string name="action_order">Order</string>
+
     <string name="menu_order">Order Coffee</string>
     <string name="menu_receipts">View Receipts</string>
     <string name="menu_favourites">Your favourites</string>
@@ -44,6 +45,7 @@
     <string name="menu_send">send</string>
     <string name="navigation_drawer_open">Open Drawer</string>
     <string name="navigation_drawer_close">Close Drawer</string>
+
     <string name="action_home">Home</string>
     <string name="welcome">Welcome to JK Café</string>
     <string name="menu_home">Home</string>
@@ -53,11 +55,22 @@
         Use our app to order your coffee ahead of time.
         Don\'t worry about forgetting your JK loyalty card.
         We virtually stamp it for you every time you buy a coffee online!</string>
+
     <string name="delete_all">Delete All</string>
     <string name="messageLoading">Please wait while the Orders are Loading..</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="quantity_hint">0</string>
+
+    <string name="hint_email">Email Address</string>
+    <string name="hint_password">Password</string>
+    <string name="login">Log In</string>
+    <string name="SignupText">Already have an account?</string>
+    <string name="signupBtn">Sign Up</string>
+    <string name="sign_up">Sign up</string>
+    <string name="logInText">Already have an Account?</string>
+    <string name="logInBtn">Log In</string>
+    <string name="logout">Log out</string>
+    <string name="deleteBtn">deleteBtn</string>
+    <string name="your_order">Your Order</string>
 
 </resources>
