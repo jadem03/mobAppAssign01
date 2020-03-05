@@ -12,18 +12,16 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import ie.wit.jk_cafe.R
-import ie.wit.jk_cafe.adapters.DeleteListener
-import ie.wit.jk_cafe.adapters.OrderAdapter
 import ie.wit.jk_cafe.fragments.*
 import ie.wit.jk_cafe.main.MainActivity
-import ie.wit.jk_cafe.models.OrderModel
 import ie.wit.jk_cafe.signUp_logIn.LoginActivity
 import kotlinx.android.synthetic.main.app_bar_home.*
-import kotlinx.android.synthetic.main.fragment_receipts.*
 import kotlinx.android.synthetic.main.home.*
+import kotlinx.android.synthetic.main.nav_header_home.view.*
+import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 
-class Home : AppCompatActivity(),
+class Home : AppCompatActivity(), AnkoLogger,
 
     NavigationView.OnNavigationItemSelectedListener
     {

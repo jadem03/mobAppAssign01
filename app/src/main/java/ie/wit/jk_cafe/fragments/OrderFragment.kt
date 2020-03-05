@@ -2,32 +2,29 @@ package ie.wit.jk_cafe.fragments
 
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ValueEventListener
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.main.MainActivity
 import ie.wit.jk_cafe.models.OrderModel
-import kotlinx.android.synthetic.main.card_order.view.*
-import kotlinx.android.synthetic.main.fragment_order.*
 import kotlinx.android.synthetic.main.fragment_order.view.*
 import kotlinx.android.synthetic.main.fragment_order.view.americano_quantity
 import kotlinx.android.synthetic.main.fragment_order.view.coffeeCup
 import kotlinx.android.synthetic.main.fragment_order.view.collectTime
 import kotlinx.android.synthetic.main.fragment_order.view.total
 import kotlinx.android.synthetic.main.fragment_order.view.where
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import java.util.*
 
-class OrderFragment : Fragment(){
+class OrderFragment : Fragment(), AnkoLogger {
 
     lateinit var app: MainActivity
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app=activity?.application as MainActivity
@@ -92,21 +89,38 @@ class OrderFragment : Fragment(){
     private fun setButtonListener(layout:View) {
         layout.orderBtn.setOnClickListener {
             val total = ("€"+layout.americano_quantity.value * 2.5+"0")
+            val quantity = layout.americano_quantity.value.toString()
             val where = if (layout.where.checkedRadioButtonId == R.id.sitIn) "Sit In" else "Take Away"
             val coffeeCup = if (layout.coffeeCup.checkedRadioButtonId == R.id.small) "Small" else "Large"
             val collectTime = ("Ready at: "+layout.collectTime.text.toString())
-            app.ordersStore.create(
-                OrderModel(
-                    total = total,
-                    where = where,
-                    coffeeCup = coffeeCup,
-                    collectTime = collectTime
-                )
+            writeNewOrder(OrderModel(total = total, quantity = quantity, where = where,
+                coffeeCup = coffeeCup, collectTime = collectTime, email = app.auth.currentUser!!.email)
             )
             var fr = getFragmentManager()?.beginTransaction()
             fr?.replace(R.id.homeFrame, ReceiptsFragment())
             fr?.commit()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        app.database.child("user-orders")
+            .child(app.auth.currentUser!!.uid)
+    }
+
+    private fun writeNewOrder(order:OrderModel){
+        val id = app.auth.currentUser!!.uid
+        val key = app.database.child("orders").push().key
+        order.id = key
+        val orderValues = order.toMap()
+        val childUpdates = HashMap<String, Any>()
+        childUpdates["/orders/$key"]=orderValues
+        childUpdates["/user-orders/$id/$key"]=orderValues
+        app.database.updateChildren(childUpdates)
     }
 
 }

@@ -5,21 +5,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import ie.wit.jk_cafe.R
-import ie.wit.jk_cafe.adapters.DeleteListener
 import ie.wit.jk_cafe.adapters.OrderAdapter
-import ie.wit.jk_cafe.adapters.ReceiptListener
+import ie.wit.jk_cafe.adapters.OrderListener
 import ie.wit.jk_cafe.main.MainActivity
 import ie.wit.jk_cafe.models.OrderModel
-import kotlinx.android.synthetic.main.fragment_receipts.*
-import kotlinx.android.synthetic.main.fragment_receipts.view.recyclerView
+import ie.wit.jk_cafe.utils.SwipeToDeleteCallback
+import ie.wit.jk_cafe.utils.SwipeToEditCallback
+import kotlinx.android.synthetic.main.fragment_receipts.view.*
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
-class ReceiptsFragment : Fragment(), DeleteListener, ReceiptListener, AnkoLogger {
+class ReceiptsFragment : Fragment(), AnkoLogger, OrderListener {
 
     lateinit var app: MainActivity
+    lateinit var receiptsFragment: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,26 +38,36 @@ class ReceiptsFragment : Fragment(), DeleteListener, ReceiptListener, AnkoLogger
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val receiptsFragment = inflater.inflate(R.layout.fragment_receipts, container, false)
+        receiptsFragment = inflater.inflate(R.layout.fragment_receipts, container, false)
+        activity?.title = getString(R.string.action_receipts)
+
         receiptsFragment.recyclerView.setLayoutManager(LinearLayoutManager(activity))
-        receiptsFragment.recyclerView.adapter = OrderAdapter(app.ordersStore.findAll(), this, this)
+
+        setSwipeRefresh()
+
+        val swipeDeleteHandler = object : SwipeToDeleteCallback(activity!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                val adapter = receiptsFragment.recyclerView.adapter as OrderAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+
+                deleteOrder((viewHolder.itemView.tag as OrderModel).id)
+                deleteUserOrder(app.auth.currentUser!!.uid,
+                    (viewHolder.itemView.tag as OrderModel).id)
+            }
+        }
+        val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
+        itemTouchDeleteHelper.attachToRecyclerView(receiptsFragment.recyclerView)
+
+        val swipeEditHandler = object : SwipeToEditCallback(activity!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                onOrderClick(viewHolder.itemView.tag as OrderModel)
+            }
+        }
+        val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
+        itemTouchEditHelper.attachToRecyclerView(receiptsFragment.recyclerView)
+
         return receiptsFragment
-    }
-
-    override fun onDeleteClick(order: OrderModel) {
-        app.ordersStore.delete(order)
-        app.ordersStore.findAll()
-        var fr = getFragmentManager()?.beginTransaction()
-        fr?.replace(R.id.homeFrame, ReceiptsFragment())
-        fr?.commit()
-    }
-
-    override fun onReceiptListener(order: OrderModel)
-    {
-        var fr = getFragmentManager()?.beginTransaction()
-        fr?.replace(R.id.homeFrame, OrderFragment())
-        fr?.commit()
-
     }
 
     companion object {
@@ -62,4 +79,78 @@ class ReceiptsFragment : Fragment(), DeleteListener, ReceiptListener, AnkoLogger
             }
     }
 
+    fun setSwipeRefresh() {
+        receiptsFragment.swiperefresh.setOnRefreshListener {
+            receiptsFragment.swiperefresh.isRefreshing = true
+            getAllOrders(app.auth.currentUser!!.uid)
+        }
+    }
+
+    fun checkSwipeRefresh() {
+        if (receiptsFragment.swiperefresh.isRefreshing) receiptsFragment.swiperefresh.isRefreshing = false
+    }
+
+    fun deleteUserOrder(userId: String, uid:String?) {
+        app.database.child("user-donations").child(userId).child(uid!!)
+            .addListenerForSingleValueEvent(
+                object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        snapshot.ref.removeValue()
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                        info("Firebase Donation error : ${error.message}")
+                    }
+                })
+    }
+
+    fun deleteOrder(uid: String?) {
+        app.database.child("orders").child(uid!!)
+            .addListenerForSingleValueEvent(
+                object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        snapshot.ref.removeValue()
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                        info("Firebase Order error : ${error.message}")
+                    }
+                })
+    }
+
+    override fun onOrderClick(order: OrderModel) {
+        activity!!.supportFragmentManager.beginTransaction()
+            .replace(R.id.homeFrame, EditOrderFragment.newInstance(order))
+            .addToBackStack(null)
+            .commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getAllOrders(app.auth.currentUser!!.uid)
+    }
+
+    private fun getAllOrders(userId:String)
+    {
+        var orders = ArrayList<OrderModel>()
+        app.database.child("user-orders").child(userId!!)
+            .addValueEventListener(object: ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {
+                    info("Firebase Donation error : ${error.message}")
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val children = snapshot.children
+                    children.forEach{
+                        val order = it.getValue(OrderModel::class.java)
+
+                        orders.add(order!!)
+
+                        receiptsFragment.recyclerView.adapter =
+                            OrderAdapter(orders, this@ReceiptsFragment)
+                        receiptsFragment.recyclerView.adapter?.notifyDataSetChanged()
+                        checkSwipeRefresh()
+                        app.database.child("user-orders").child(userId).removeEventListener(this)
+                    }
+                }
+            })
+    }
 }

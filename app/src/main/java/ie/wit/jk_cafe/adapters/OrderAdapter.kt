@@ -7,22 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.models.OrderModel
 import kotlinx.android.synthetic.main.card_order.view.*
-import kotlinx.android.synthetic.main.card_order.view.coffeeCup
 
-interface DeleteListener
-{
-    fun onDeleteClick(order:OrderModel)
+
+interface OrderListener {
+    fun onOrderClick(order: OrderModel)
 }
 
-interface ReceiptListener
-{
-    fun onReceiptListener(order:OrderModel)
-}
-
-class OrderAdapter constructor(private var orders: List<OrderModel>,
-                               private val deleteListener: DeleteListener,
-                               private val receiptListener: ReceiptListener
-)
+class OrderAdapter constructor(var orders: ArrayList<OrderModel>,
+                               private val listener: OrderListener)
     : RecyclerView.Adapter<OrderAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -37,26 +29,33 @@ class OrderAdapter constructor(private var orders: List<OrderModel>,
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val order = orders[holder.adapterPosition]
-        holder.bind(order, deleteListener, receiptListener)
+        holder.bind(order, listener)
     }
 
-    override fun getItemCount(): Int = orders.size
+    override fun getItemCount(): Int
+    {
+        return orders.size
+    }
+
+    fun removeAt(position: Int)
+    {
+        orders.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(
-            order: OrderModel,
-        deleteListener: DeleteListener,
-            receiptListener: ReceiptListener
+            order: OrderModel, listener: OrderListener
         ) {
+            itemView.tag = order
             itemView.where.text = order.where
+            itemView.orderQuantity.text = order.quantity
             itemView.coffeeCup.text = order.coffeeCup
             itemView.orderTotal.text = order.total
             itemView.collectTime.text = order.collectTime
-            itemView.deleteBtn.setOnClickListener{deleteListener.onDeleteClick(order)}
-            itemView.setOnClickListener{receiptListener.onReceiptListener(order)}
             itemView.imageIcon.setImageResource(R.mipmap.coffee_cup02)
-
+            itemView.setOnClickListener{listener.onOrderClick(order)}
         }
     }
 }

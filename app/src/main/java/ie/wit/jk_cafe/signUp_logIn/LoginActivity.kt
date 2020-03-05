@@ -6,21 +6,24 @@ import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.activities.Home
+import ie.wit.jk_cafe.main.MainActivity
 import kotlinx.android.synthetic.main.login_activity.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 
 class LoginActivity: AppCompatActivity(), AnkoLogger {
-    private lateinit var cafeAuth: FirebaseAuth
+
+    lateinit var app: MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
 
-        cafeAuth = FirebaseAuth.getInstance()
+        app = application as MainActivity
 
         val loginBtn = findViewById<View>(R.id.loginBtn)
         loginBtn.setOnClickListener(View.OnClickListener { view ->
@@ -34,14 +37,17 @@ class LoginActivity: AppCompatActivity(), AnkoLogger {
 
     private fun verifyEmail()
     {
-        val user = cafeAuth.currentUser
+        val user = app.auth.currentUser
         if(user!=null) {
             if (user.isEmailVerified) {
+
+                app.database = FirebaseDatabase.getInstance().reference
+
                 startActivity(Intent(this, Home::class.java))
                 toast("Log in success")
             } else {
                 toast("email not verified")
-                cafeAuth.signOut()
+                app.auth.signOut()
             }
         }
     }
@@ -52,10 +58,10 @@ class LoginActivity: AppCompatActivity(), AnkoLogger {
         val passwordText = findViewById<View>(R.id.passwordText) as EditText
         val password = passwordText.text.toString()
 
-        cafeAuth.currentUser?.reload()
+        app.auth.currentUser?.reload()
 
         if (email.isNotEmpty() || password.isNotEmpty()) {
-            cafeAuth.signInWithEmailAndPassword(email, password)
+            app.auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
 
                     if (task.isSuccessful) {

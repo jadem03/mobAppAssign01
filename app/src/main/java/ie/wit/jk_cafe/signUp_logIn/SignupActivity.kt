@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import ie.wit.jk_cafe.R
+import ie.wit.jk_cafe.main.MainActivity
 import kotlinx.android.synthetic.main.signup_activity.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.intentFor
@@ -17,12 +18,13 @@ import java.util.regex.Pattern
 
 class SignupActivity: AppCompatActivity(), AnkoLogger {
 
-    val cafeAuth = FirebaseAuth.getInstance()
+    lateinit var app: MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.signup_activity)
 
+        app = application as MainActivity
         val signupBtn = findViewById<View>(R.id.signUpBtn)
 
         signupBtn.setOnClickListener(View.OnClickListener { view ->
@@ -68,12 +70,12 @@ class SignupActivity: AppCompatActivity(), AnkoLogger {
         }
 
         if (email.isNotEmpty() && passwordCheck()) {
-            cafeAuth.createUserWithEmailAndPassword(email, password)
+            app.auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, OnCompleteListener { task ->
                     if (task.isSuccessful) {
 
-                        val user = cafeAuth.currentUser
-                        val user_id = user!!.uid
+                        val user = app.auth.currentUser
+                        val uid = user!!.uid
 
                         startActivity(Intent(this, LoginActivity::class.java))
                         Toast.makeText(this, "You have successfully signed up", Toast.LENGTH_LONG)

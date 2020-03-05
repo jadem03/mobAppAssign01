@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo_01"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -26,8 +26,5 @@
             android:label="Home"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".fragments.OrderFragment"></activity>
-        <activity android:name=".fragments.ReceiptsFragment"></activity>
-        <activity android:name=".fragments.AboutFragment"></activity>
     </application>
 </manifest>

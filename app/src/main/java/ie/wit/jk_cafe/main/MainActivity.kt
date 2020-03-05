@@ -2,18 +2,19 @@ package ie.wit.jk_cafe.main
 
 import android.app.Application
 import android.util.Log
-import ie.wit.jk_cafe.models.OrderMemStore
-import ie.wit.jk_cafe.models.OrderStore
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 class MainActivity : Application(), AnkoLogger {
 
-    lateinit var ordersStore: OrderMemStore
+    lateinit var database: DatabaseReference
+    lateinit var auth: FirebaseAuth
 
     override fun onCreate() {
         super.onCreate()
-        ordersStore = OrderMemStore()
+
+        auth = FirebaseAuth.getInstance()
         Log.v("Order","JK Café App started")
 
     }
