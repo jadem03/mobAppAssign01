@@ -49,11 +49,11 @@ class ReceiptsFragment : Fragment(), AnkoLogger, OrderListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
                 val adapter = receiptsFragment.recyclerView.adapter as OrderAdapter
-                adapter.removeAt(viewHolder.adapterPosition)
 
-                deleteOrder((viewHolder.itemView.tag as OrderModel).id)
+                adapter.removeAt(viewHolder.adapterPosition)
+                deleteOrder((viewHolder.itemView.tag as OrderModel).uid)
                 deleteUserOrder(app.auth.currentUser!!.uid,
-                    (viewHolder.itemView.tag as OrderModel).id)
+                    (viewHolder.itemView.tag as OrderModel).uid)
             }
         }
         val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
@@ -91,14 +91,15 @@ class ReceiptsFragment : Fragment(), AnkoLogger, OrderListener {
     }
 
     fun deleteUserOrder(userId: String, uid:String?) {
-        app.database.child("user-donations").child(userId).child(uid!!)
+        app.database.child("user-orders").child(userId).child(uid!!)
             .addListenerForSingleValueEvent(
                 object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
+
                         snapshot.ref.removeValue()
                     }
                     override fun onCancelled(error: DatabaseError) {
-                        info("Firebase Donation error : ${error.message}")
+                        info("Firebase Order error : ${error.message}")
                     }
                 })
     }
@@ -130,8 +131,8 @@ class ReceiptsFragment : Fragment(), AnkoLogger, OrderListener {
 
     private fun getAllOrders(userId:String)
     {
-        var orders = ArrayList<OrderModel>()
-        app.database.child("user-orders").child(userId!!)
+        val orderList = ArrayList<OrderModel>()
+        app.database.child("user-orders").child(userId)
             .addValueEventListener(object: ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                     info("Firebase Donation error : ${error.message}")
@@ -142,10 +143,10 @@ class ReceiptsFragment : Fragment(), AnkoLogger, OrderListener {
                     children.forEach{
                         val order = it.getValue(OrderModel::class.java)
 
-                        orders.add(order!!)
+                        orderList.add(order!!)
 
                         receiptsFragment.recyclerView.adapter =
-                            OrderAdapter(orders, this@ReceiptsFragment)
+                            OrderAdapter(orderList, this@ReceiptsFragment)
                         receiptsFragment.recyclerView.adapter?.notifyDataSetChanged()
                         checkSwipeRefresh()
                         app.database.child("user-orders").child(userId).removeEventListener(this)

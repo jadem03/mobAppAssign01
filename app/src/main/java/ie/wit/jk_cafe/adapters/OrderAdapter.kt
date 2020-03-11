@@ -50,7 +50,7 @@ class OrderAdapter constructor(var orders: ArrayList<OrderModel>,
         ) {
             itemView.tag = order
             itemView.where.text = order.where
-            itemView.orderQuantity.text = order.quantity
+            itemView.orderQuantity.text = order.quantity.toString()
             itemView.coffeeCup.text = order.coffeeCup
             itemView.orderTotal.text = order.total
             itemView.collectTime.text = order.collectTime

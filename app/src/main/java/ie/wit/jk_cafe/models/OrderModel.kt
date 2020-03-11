@@ -8,8 +8,8 @@ import kotlinx.android.parcel.Parcelize
 @IgnoreExtraProperties
 @Parcelize
 data class OrderModel(
-    var id: String? = "",
-    var quantity: String = "",
+    var uid: String? = "",
+    var quantity: Int = 0,
     var coffeeCup: String = "N/A",
     var where: String = "N/A",
     var collectTime: String = " ",
@@ -20,7 +20,7 @@ data class OrderModel(
     fun toMap(): Map<String, Any?>
     {
         return mapOf(
-            "uid" to id,
+            "uid" to uid,
             "quantity" to quantity,
             "coffeeCup" to coffeeCup,
             "where" to where,

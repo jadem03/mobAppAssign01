@@ -47,6 +47,8 @@ class EditOrderFragment : Fragment(), AnkoLogger {
 
         editOrderFragment.edit_americano_quantity.minValue = 1
         editOrderFragment.edit_americano_quantity.maxValue = 5
+        var orderTotal = edit_americano_quantity.minValue * 2.5
+        editOrderFragment.total.setText("€"+"$orderTotal"+"0")
         editOrderFragment.edit_americano_quantity.setOnValueChangedListener { picker, oldVal, newVal ->
             val orderTotal = newVal * 2.5
             editOrderFragment.edit_total.setText("€"+"$orderTotal"+"0")
@@ -73,16 +75,14 @@ class EditOrderFragment : Fragment(), AnkoLogger {
             clock.show()
         }
 
-        editOrderFragment.edit_americano_quantity.setValue(editOrder!!.quantity.toInt())
+        editOrderFragment.edit_americano_quantity.value = editOrder!!.quantity
         editOrderFragment.edit_collectTime.setText(editOrder!!.collectTime)
-        editOrderFragment.edit_where.setId(editOrder!!.where.toInt())
-        editOrderFragment.coffeeCup.setId(editOrder!!.coffeeCup.toInt())
 
         editOrderFragment.updateBtn.setOnClickListener{
             updateOrderData()
-            updateOrder(editOrder!!.id, editOrder!!)
+            updateOrder(editOrder!!.uid, editOrder!!)
             updateUserOrder(app.auth.currentUser!!.uid,
-                editOrder!!.id, editOrder!!)
+                editOrder!!.uid, editOrder!!)
         }
         return editOrderFragment
     }
@@ -97,10 +97,12 @@ class EditOrderFragment : Fragment(), AnkoLogger {
     }
 
     fun updateOrderData(){
-        editOrder!!.collectTime = editOrderFragment.edit_collectTime.text.toString()
-        editOrder!!.quantity = editOrderFragment.edit_americano_quantity.value.toString()
-        editOrder!!.where = editOrderFragment.edit_where.id.toString()
-        editOrder!!.coffeeCup = editOrderFragment.edit_coffeeCup.id.toString()
+
+        editOrder!!.collectTime = edit_collectTime.text.toString()
+        editOrder!!.quantity = editOrderFragment.edit_americano_quantity.value
+        editOrder!!.total = ("€"+editOrderFragment.edit_americano_quantity.value * 2.5+"0")
+        editOrder!!.where = if (editOrderFragment.edit_where.checkedRadioButtonId == R.id.sitIn) "Sit In" else "Take Away"
+        editOrder!!.coffeeCup = if (editOrderFragment.edit_coffeeCup.checkedRadioButtonId == R.id.small) "Small" else "Large"
     }
 
     fun updateUserOrder(userId: String, uid: String?, order: OrderModel) {

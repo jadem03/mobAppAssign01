@@ -1,5 +1,6 @@
 package ie.wit.jk_cafe.fragments
 
+import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -52,12 +53,15 @@ class OrderFragment : Fragment(), AnkoLogger {
             }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setQuantity(layout: View)
     {
         layout.americano_quantity.minValue = 1
         layout.americano_quantity.maxValue = 5
+        var orderTotal = layout.americano_quantity.minValue * 2.5
+        layout.total.setText("€"+"$orderTotal"+"0")
         layout.americano_quantity.setOnValueChangedListener { picker, oldVal, newVal ->
-            val orderTotal = newVal * 2.5
+            orderTotal = newVal * 2.5
             layout.total.setText("€"+"$orderTotal"+"0")
         }
     }
@@ -89,10 +93,10 @@ class OrderFragment : Fragment(), AnkoLogger {
     private fun setButtonListener(layout:View) {
         layout.orderBtn.setOnClickListener {
             val total = ("€"+layout.americano_quantity.value * 2.5+"0")
-            val quantity = layout.americano_quantity.value.toString()
+            val quantity = layout.americano_quantity.value
             val where = if (layout.where.checkedRadioButtonId == R.id.sitIn) "Sit In" else "Take Away"
-            val coffeeCup = if (layout.coffeeCup.checkedRadioButtonId == R.id.small) "Small" else "Large"
-            val collectTime = ("Ready at: "+layout.collectTime.text.toString())
+            var coffeeCup = if (layout.coffeeCup.checkedRadioButtonId == R.id.small) "Small" else "Large"
+            val collectTime = layout.collectTime.text.toString()
             writeNewOrder(OrderModel(total = total, quantity = quantity, where = where,
                 coffeeCup = coffeeCup, collectTime = collectTime, email = app.auth.currentUser!!.email)
             )
@@ -113,13 +117,13 @@ class OrderFragment : Fragment(), AnkoLogger {
     }
 
     private fun writeNewOrder(order:OrderModel){
-        val id = app.auth.currentUser!!.uid
+        val uid = app.auth.currentUser!!.uid
         val key = app.database.child("orders").push().key
-        order.id = key
+        order.uid = key
         val orderValues = order.toMap()
         val childUpdates = HashMap<String, Any>()
         childUpdates["/orders/$key"]=orderValues
-        childUpdates["/user-orders/$id/$key"]=orderValues
+        childUpdates["/user-orders/$uid/$key"]=orderValues
         app.database.updateChildren(childUpdates)
     }
 

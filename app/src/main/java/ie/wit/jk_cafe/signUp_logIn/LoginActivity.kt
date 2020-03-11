@@ -25,6 +25,13 @@ class LoginActivity: AppCompatActivity(), AnkoLogger {
 
         app = application as MainActivity
 
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            startActivityForResult(intentFor<Home>(), 0)
+        } else {
+            login()
+        }
+
         val loginBtn = findViewById<View>(R.id.loginBtn)
         loginBtn.setOnClickListener(View.OnClickListener { view ->
             login()
@@ -40,8 +47,6 @@ class LoginActivity: AppCompatActivity(), AnkoLogger {
         val user = app.auth.currentUser
         if(user!=null) {
             if (user.isEmailVerified) {
-
-                app.database = FirebaseDatabase.getInstance().reference
 
                 startActivity(Intent(this, Home::class.java))
                 toast("Log in success")
