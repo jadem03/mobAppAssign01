@@ -1,6 +1,7 @@
 package ie.wit.jk_cafe.fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -78,16 +79,21 @@ class OrderFragment : Fragment(), AnkoLogger {
         {
             val clock = TimePickerDialog(activity,
                 TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                    if(hourOfDay>hour)
+                    if(!(hourOfDay <= 7 || hourOfDay >= 18 || hourOfDay < hour))
                     {
                         val time = String.format("$hourOfDay:%02d", minute)
                         layout.collectTime.setText(time)
                     }
                     else
                     {
-                        Toast.makeText(activity, R.string.error, Toast.LENGTH_LONG).show()
-                        val time = String.format("$hour:$minute")
-                        layout.collectTime.setText(time) }
+                        val dialogBox = AlertDialog.Builder(activity)
+                        dialogBox.setMessage("Our open times are 07am - 06pm Monday to Sunday." +
+                                "Please select another time")
+                        dialogBox.setNeutralButton("OK") {dialog, which ->
+                            dialog.cancel() }
+                        val myDialog = dialogBox.create()
+                        myDialog.show()
+                    }
                 }, hour, minute, true)
             clock.show()
         }
