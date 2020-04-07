@@ -51,10 +51,10 @@ class EditOrderFragment : Fragment(), AnkoLogger {
         editOrderFragment.edit_americano_quantity.minValue = 1
         editOrderFragment.edit_americano_quantity.maxValue = 5
         var orderTotal = edit_americano_quantity.minValue * 2.5
-        editOrderFragment.total.setText("€"+"$orderTotal"+"0")
+        editOrderFragment.total.text = "€"+"$orderTotal"+"0"
         editOrderFragment.edit_americano_quantity.setOnValueChangedListener { picker, oldVal, newVal ->
             val orderTotal = newVal * 2.5
-            editOrderFragment.edit_total.setText("€"+"$orderTotal"+"0")
+            editOrderFragment.edit_total.text = "€"+"$orderTotal"+"0"
         }
 
         val calendar = Calendar.getInstance()
@@ -127,7 +127,7 @@ class EditOrderFragment : Fragment(), AnkoLogger {
                 })
     }
 
-    fun updateOrder(uid: String?,order:OrderModel) {
+    private fun updateOrder(uid: String?,order:OrderModel) {
         app.database.child("orders").child(uid!!.toString())
             .addListenerForSingleValueEvent(
                 object : ValueEventListener {

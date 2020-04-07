@@ -1,9 +1,11 @@
 package ie.wit.jk_cafe.activities
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -18,10 +20,12 @@ import ie.wit.jk_cafe.main.MainActivity
 import ie.wit.jk_cafe.signUp_logIn.LoginActivity
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.app_bar_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.home.*
 import kotlinx.android.synthetic.main.nav_header_home.view.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
+import java.time.LocalTime
 
 class Home : AppCompatActivity(), AnkoLogger,
 
@@ -60,10 +64,32 @@ class Home : AppCompatActivity(), AnkoLogger,
 
             when (item.itemId) {
                 R.id.nav_home -> navigateTo(HomeFragment.newInstance())
-                R.id.nav_order -> navigateTo(OrderFragment.newInstance())
                 R.id.nav_receipts -> navigateTo(ReceiptsFragment.newInstance())
                 R.id.nav_about -> navigateTo(AboutFragment.newInstance())
                 R.id.nav_logout -> onLogOut()
+
+                R.id.nav_order ->{
+                    val currentTime = LocalTime.now()
+                    val openTime = LocalTime.of(7, 0, 10)
+                    val closeTime = LocalTime.of(18, 0, 10)
+                    if (currentTime > openTime && currentTime < closeTime) {
+                        navigateTo(OrderFragment.newInstance())
+                    }
+                    else {
+                        val dialogBox = AlertDialog.Builder(this)
+                        dialogBox.setTitle("Sorry!")
+                        dialogBox.setMessage(
+                            "We're Closed!" +
+                                    "Our open times are 07am - 06pm Monday - Sunday."
+                        )
+                        dialogBox.setNeutralButton("OK") { dialog, which ->
+                            dialog.cancel()
+                        }
+                        val myDialog = dialogBox.create()
+                        myDialog.show()
+                    }
+                }
+
                 else -> toast("You Selected Something Else")
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -78,7 +104,30 @@ class Home : AppCompatActivity(), AnkoLogger,
 
             when (item.itemId) {
                 R.id.action_home -> navigateTo(HomeFragment.newInstance())
-                R.id.action_order -> navigateTo(OrderFragment.newInstance())
+
+                R.id.action_order -> {
+                    val currentTime = LocalTime.now()
+                    val openTime = LocalTime.of(7, 0, 10)
+                    val closeTime = LocalTime.of(18, 0, 10)
+                    if (currentTime > openTime && currentTime < closeTime) {
+
+                        navigateTo(OrderFragment.newInstance())
+                    } else {
+                        val dialogBox = AlertDialog.Builder(this)
+                        dialogBox.setTitle("Sorry!")
+                        dialogBox.setMessage(
+                            "We're Closed!" +
+                                    "Our open times are 07am - 06pm Monday - Sunday."
+                        )
+
+                        dialogBox.setNeutralButton("OK") { dialog, which ->
+                            dialog.cancel()
+                        }
+                        val myDialog = dialogBox.create()
+                        myDialog.show()
+                    }
+                }
+
                 R.id.action_receipts -> navigateTo(ReceiptsFragment.newInstance())
                 else -> toast("You Selected Something Else")
             }

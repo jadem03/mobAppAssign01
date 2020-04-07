@@ -8,8 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ValueEventListener
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.main.MainActivity
 import ie.wit.jk_cafe.models.OrderModel
@@ -20,8 +18,10 @@ import kotlinx.android.synthetic.main.fragment_order.view.collectTime
 import kotlinx.android.synthetic.main.fragment_order.view.total
 import kotlinx.android.synthetic.main.fragment_order.view.where
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
+import java.time.LocalTime
 import java.util.*
+import java.util.Calendar
+
 
 class OrderFragment : Fragment(), AnkoLogger {
 
@@ -38,6 +38,7 @@ class OrderFragment : Fragment(), AnkoLogger {
         // Inflate the layout for this fragment
         val orderFragment = inflater.inflate(R.layout.fragment_order, container, false)
         activity?.title = getString(R.string.action_order)
+
         setQuantity(orderFragment)
         setOrderTime(orderFragment)
         setButtonListener(orderFragment)
@@ -69,6 +70,8 @@ class OrderFragment : Fragment(), AnkoLogger {
     private fun setOrderTime(layout: View)
     {
         val calendar = Calendar.getInstance()
+        //makes the time 15 minutes ahead
+        calendar.add(Calendar.MINUTE, 15)
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
         layout.collectTime.setOnClickListener()
@@ -77,13 +80,13 @@ class OrderFragment : Fragment(), AnkoLogger {
                 TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
                     if(hourOfDay>hour)
                     {
-                        var time = String.format("$hourOfDay:%02d", minute)
+                        val time = String.format("$hourOfDay:%02d", minute)
                         layout.collectTime.setText(time)
                     }
                     else
                     {
-                        Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show()
-                        var time = String.format("$hour:$minute")
+                        Toast.makeText(activity, R.string.error, Toast.LENGTH_LONG).show()
+                        val time = String.format("$hour:$minute")
                         layout.collectTime.setText(time) }
                 }, hour, minute, true)
             clock.show()

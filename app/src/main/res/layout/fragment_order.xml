@@ -145,6 +145,7 @@
                 android:layout_gravity="center"
                 android:focusable="false"
                 android:hint="@string/collectTime"
+                android:maxLength="10"
                 android:inputType="date"
                 android:textColor="@color/colorGrey" />
 
