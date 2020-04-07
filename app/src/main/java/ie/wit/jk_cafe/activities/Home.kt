@@ -11,16 +11,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.fragments.*
 import ie.wit.jk_cafe.main.MainActivity
 import ie.wit.jk_cafe.signUp_logIn.LoginActivity
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.home.*
 import kotlinx.android.synthetic.main.nav_header_home.view.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
-
 
 class Home : AppCompatActivity(), AnkoLogger,
 
@@ -39,11 +40,7 @@ class Home : AppCompatActivity(), AnkoLogger,
             navView.setNavigationItemSelectedListener(this)
             navView.getHeaderView(0).headerEmail.text = app.auth.currentUser?.email
 
-            for (user in FirebaseAuth.getInstance().currentUser!!.providerData) {
-                if (user.providerId == "google.com") {
-                    navView.getHeaderView(0).headerTitle.text = app.auth.currentUser?.displayName
-                }
-            }
+            UISettings()
 
             val toggle = ActionBarDrawerToggle(
                 this, drawerLayout, toolbar,
@@ -77,7 +74,6 @@ class Home : AppCompatActivity(), AnkoLogger,
             menuInflater.inflate(R.menu.menu_home, menu)
             return true
         }
-
         override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
             when (item.itemId) {
@@ -97,6 +93,27 @@ class Home : AppCompatActivity(), AnkoLogger,
             finish()
         }
 
+        private fun UISettings()
+        {
+            for (user in FirebaseAuth.getInstance().currentUser!!.providerData) {
+                if (user.providerId == "google.com") {
+                    navView.getHeaderView(0).headerTitle.text = app.auth.currentUser?.displayName
+
+                    Picasso.get().load(app.auth.currentUser?.photoUrl)
+                        .resize(190, 190)
+                        .transform(CropCircleTransformation())
+                        .into(navView.getHeaderView(0).imageView)
+                }
+                if (app.auth.currentUser?.photoUrl != null) {
+                    navView.getHeaderView(0).headerTitle.text = app.auth.currentUser?.displayName
+                    Picasso.get().load(app.auth.currentUser?.photoUrl)
+                        .resize(180, 180)
+                        .transform(CropCircleTransformation())
+                        .into(navView.getHeaderView(0).imageView)
+                }
+            }
+
+        }
 
         override fun onBackPressed() {
             if (drawerLayout.isDrawerOpen(GravityCompat.START))
