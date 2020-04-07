@@ -27,7 +27,7 @@
     <string name="chooseQuantity">Coffee Quantity</string>
     <string name="chooseSize">Coffee Size</string>
     <string name="where">Sit in JK café or TakeAway?</string>
-    <string name="collectTime">___ : ___</string>
+    <string name="collectTime">_____ : _____</string>
     <string name="collection_Time">Collection Time:</string>
     <string name="when_want_coffee">When do you want your Coffee?</string>
     <string name="error">Open time 07:00am - 06:00pm</string>
@@ -84,5 +84,7 @@
     <string name="confirm_order">Confirm Order</string>
     <string name="action_edit">Edit</string>
     <string name="update_order">Update Order</string>
+    <string name="totalPrice">€0.00</string>
+    <string name="aboutUs">About Us</string>
 
 </resources>

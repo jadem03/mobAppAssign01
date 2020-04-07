@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".fragments.EditOrderFragment">
+    android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TableLayout
             android:layout_width="match_parent"
@@ -27,62 +20,53 @@
                 android:padding="5dp"
                 android:text="@string/chooseQuantity"
                 android:textColor="@color/colorWhite" />
-
+            <TextView
+                android:id="@+id/americano"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:text="@string/americano"
+                android:textSize="14sp" />
             <TableRow>
                 <TextView
-                    android:id="@+id/americano"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:paddingStart="10dp"
-                    android:text="@string/americano"
-                    android:textSize="18sp" />
-            </TableRow>
-
-            <TableRow>
-                <TextView
-                    android:layout_width="199dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="40dp"
                     android:padding="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
                     android:text="@string/a_descript" />
 
                 <NumberPicker
                     android:id="@+id/edit_americano_quantity"
                     style="@android:style/Widget.Material.NumberPicker"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp" />
+                    android:layout_gravity="center"/>
             </TableRow>
 
             <TextView
                 android:id="@+id/chooseSize"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="10dp"
                 android:background="@color/colorPrimary"
-                android:padding="5dp"
+                android:padding="8dp"
                 android:text="@string/chooseSize"
                 android:textColor="@color/colorWhite" />
 
             <TableRow>
-
                 <ImageView
                     android:id="@+id/smallOrder"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="60dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="bottom"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginStart="20dp"
                     android:src="@mipmap/coffee_cup" />
 
                 <RadioGroup
                     android:id="@+id/edit_coffeeCup"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_height="match_parent">
 
                     <RadioButton
                         android:id="@+id/small"
@@ -90,6 +74,7 @@
                         android:layout_height="wrap_content"
                         android:checked="true"
                         android:text="@string/smallCup"
+
                         android:textColor="@color/colorGrey" />
 
                     <RadioButton
@@ -104,8 +89,8 @@
 
             <TextView
                 android:id="@+id/takeAwaySitIn"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@color/colorPrimary"
                 android:padding="5dp"
                 android:text="@string/where"
@@ -136,40 +121,39 @@
 
             <TextView
                 android:id="@+id/time"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@color/colorPrimary"
                 android:padding="5dp"
                 android:text="@string/when_want_coffee"
                 android:textColor="@color/colorWhite" />
 
             <TableRow>
-
                 <TextView
                     android:id="@+id/chooseTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="20dp"
                     android:text="@string/collection_Time" />
 
                 <EditText
                     android:id="@+id/edit_collectTime"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
+                    android:layout_gravity="center"
                     android:focusable="false"
                     android:hint="@string/collectTime"
                     android:inputType="date"
-                    android:maxLength="12"
                     android:textColor="@color/colorGrey" />
 
             </TableRow>
 
             <TableRow
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@color/colorPrimary"
                 android:padding="8dp">
 
@@ -188,20 +172,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:textColor="@color/colorWhite"
+                    android:text="@string/totalPrice"
                     android:textSize="18sp" />
             </TableRow>
 
             <Button
                 android:id="@+id/updateBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="120dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="120dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/rounded_btn"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorPrimary"
                 android:text="@string/update_order"
                 android:textColor="@color/colorWhite" />
         </TableLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</ScrollView>

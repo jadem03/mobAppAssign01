@@ -40,7 +40,7 @@ class Home : AppCompatActivity(), AnkoLogger,
             navView.setNavigationItemSelectedListener(this)
             navView.getHeaderView(0).headerEmail.text = app.auth.currentUser?.email
 
-            UISettings()
+            userUI()
 
             val toggle = ActionBarDrawerToggle(
                 this, drawerLayout, toolbar,
@@ -93,7 +93,7 @@ class Home : AppCompatActivity(), AnkoLogger,
             finish()
         }
 
-        private fun UISettings()
+        private fun userUI()
         {
             for (user in FirebaseAuth.getInstance().currentUser!!.providerData) {
                 if (user.providerId == "google.com") {
