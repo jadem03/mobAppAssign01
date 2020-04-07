@@ -51,7 +51,7 @@ class LoginActivity: AppCompatActivity(), AnkoLogger {
             googleSignIn()
         }
 
-        signupTxtBtn.setOnClickListener {
+        signUpTxtBtn.setOnClickListener {
             startActivityForResult(intentFor<SignUpActivity>(), 0)
         }
     }

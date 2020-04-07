@@ -1,104 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:src="@mipmap/logo_01"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:contentDescription="@string/a_descript" />
 
         <EditText
             android:id="@+id/emailText"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
+            android:layout_margin="20dp"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
-            android:maxLength="40"
-            android:maxLines="1"
             android:padding="8dp"
-            android:textSize="16sp" />
+            android:textSize="12sp"
+            android:autofillHints="@string/hint_email" />
 
         <EditText
             android:id="@+id/passwordText"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
+            android:layout_margin="20dp"
             android:hint="@string/hint_password"
+            android:autofillHints="@string/hint_password"
             android:inputType="textPassword"
-            android:maxLength="12"
-            android:maxLines="1"
             android:padding="8dp"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
 
             <Button
                 android:id="@+id/signUpBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="60dp"
-                android:layout_marginEnd="60dp"
-                android:layout_marginTop="30dp"
+                android:layout_margin="20dp"
                 android:background="@color/colorPrimary"
-                android:padding="8dp"
                 android:text="@string/sign_up"
                 android:textColor="@color/colorWhite"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
-            <TableRow
+            <LinearLayout
                 android:id="@+id/googleSignInButton"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="60dp"
-                android:layout_marginEnd="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:orientation="horizontal">
 
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/google_button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
                     android:layout_weight="1" />
-            </TableRow>
+            </LinearLayout>
 
         <TextView
-            android:id="@+id/login_text"
+            android:id="@+id/signIn_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:textAlignment="center"
             android:text="@string/logInText"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="15sp" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp" />
 
             <Button
                 android:id="@+id/loginTxtBtn"
@@ -107,11 +86,8 @@
                 android:layout_marginBottom="10dp"
                 android:background="@null"
                 android:text="@string/logInBtn"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp" />
-
-        </TableLayout>
-        </ScrollView>
-    </RelativeLayout>
-</LinearLayout>
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+    </LinearLayout>
+</ScrollView>
 
