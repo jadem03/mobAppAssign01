@@ -72,15 +72,32 @@
         android:textColor="@color/colorWhite"
         android:textSize="18sp"/>
 
+        <TableRow
+            android:id="@+id/googleSignInButton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:orientation="horizontal">
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/google_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:layout_weight="1" />
+        </TableRow>
+
     <TextView
         android:id="@+id/login_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:textSize="15sp"
         android:textColor="@color/colorPrimaryDark"
-        android:text="@string/SignupText"
+        android:text="@string/logInText"
         />
 
     <Button

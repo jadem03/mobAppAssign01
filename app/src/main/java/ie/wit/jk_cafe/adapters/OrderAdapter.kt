@@ -8,7 +8,6 @@ import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.models.OrderModel
 import kotlinx.android.synthetic.main.card_order.view.*
 
-
 interface OrderListener {
     fun onOrderClick(order: OrderModel)
 }

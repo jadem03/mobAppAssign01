@@ -65,17 +65,15 @@
     <string name="hint_password">Password</string>
     <string name="login">Log In</string>
     <string name="SignupText">Already have an account?</string>
-    <string name="signupBtn">Sign Up</string>
-    <string name="sign_up">Sign up</string>
-    <string name="logInText">Already have an Account?</string>
-    <string name="logInBtn">Log In</string>
+    <string name="signupBtn">Sign Up here</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="logInText">Don\'t have an Account?</string>
+    <string name="logInBtn">Log In Here</string>
     <string name="logout">Log out</string>
     <string name="deleteBtn">deleteBtn</string>
     <string name="your_order">Your Order</string>
     <string name="header_email">jay@email.com</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pay">Please enter you card details to pay for your order</string>
     <string name="card_number">0000 0000 0000 0000</string>
     <string name="card">Card number:</string>

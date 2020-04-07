@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.Toast
-import androidx.core.view.get
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -21,6 +21,9 @@ import kotlinx.android.synthetic.main.fragment_order.view.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import java.util.*
+import android.widget.RadioGroup
+import kotlinx.android.synthetic.main.fragment_order.*
+import kotlinx.android.synthetic.main.fragment_order.view.coffeeCup
 
 class EditOrderFragment : Fragment(), AnkoLogger {
 
@@ -77,6 +80,7 @@ class EditOrderFragment : Fragment(), AnkoLogger {
 
         editOrderFragment.edit_americano_quantity.value = editOrder!!.quantity
         editOrderFragment.edit_collectTime.setText(editOrder!!.collectTime)
+        
 
         editOrderFragment.updateBtn.setOnClickListener{
             updateOrderData()

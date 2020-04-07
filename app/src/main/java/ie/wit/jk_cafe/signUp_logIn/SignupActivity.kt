@@ -1,13 +1,22 @@
 package ie.wit.jk_cafe.signUp_logIn
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.main.MainActivity
 import kotlinx.android.synthetic.main.signup_activity.*
@@ -16,7 +25,7 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import java.util.regex.Pattern
 
-class SignupActivity: AppCompatActivity(), AnkoLogger {
+class SignUpActivity: AppCompatActivity(), AnkoLogger {
 
     lateinit var app: MainActivity
 
@@ -25,22 +34,32 @@ class SignupActivity: AppCompatActivity(), AnkoLogger {
         setContentView(R.layout.signup_activity)
 
         app = application as MainActivity
-        val signupBtn = findViewById<View>(R.id.signUpBtn)
 
-        signupBtn.setOnClickListener(View.OnClickListener { view ->
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        app.googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        signUpBtn.setOnClickListener {
             signUp()
-        })
+        }
+
+        google_button.setOnClickListener{
+           googleSignIn()
+        }
 
         loginTxtBtn.setOnClickListener {
             startActivityForResult(intentFor<LoginActivity>(), 0)
         }
     }
 
+    companion object {
+        private const val RC_SIGN_IN = 9001
+    }
+
     private fun signUp() {
-
-        val emailText = findViewById<View>(R.id.emailText) as EditText
-        val passwordText = findViewById<View>(R.id.passwordText) as EditText
-
         val email = emailText.text.toString()
         val password = passwordText.text.toString()
 
@@ -67,8 +86,8 @@ class SignupActivity: AppCompatActivity(), AnkoLogger {
                 return false
             }
             return true
-        }
 
+        }
         if (email.isNotEmpty() && passwordCheck()) {
             app.auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, OnCompleteListener { task ->
@@ -96,6 +115,38 @@ class SignupActivity: AppCompatActivity(), AnkoLogger {
         } else {
             toast("Please complete all fields correctly")
         }
+    }
 
+    private fun googleSignIn() {
+        val signInIntent = app.googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account!!)
+            } catch (e: ApiException) {
+
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        app.auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = app.auth.currentUser
+                } else {
+                    toast("Fail")
+                }
+            }
     }
 }

@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.nav_header_home.view.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 
+
 class Home : AppCompatActivity(), AnkoLogger,
 
     NavigationView.OnNavigationItemSelectedListener
@@ -36,6 +37,13 @@ class Home : AppCompatActivity(), AnkoLogger,
             app = application as MainActivity
 
             navView.setNavigationItemSelectedListener(this)
+            navView.getHeaderView(0).headerEmail.text = app.auth.currentUser?.email
+
+            for (user in FirebaseAuth.getInstance().currentUser!!.providerData) {
+                if (user.providerId == "google.com") {
+                    navView.getHeaderView(0).headerTitle.text = app.auth.currentUser?.displayName
+                }
+            }
 
             val toggle = ActionBarDrawerToggle(
                 this, drawerLayout, toolbar,
@@ -46,7 +54,6 @@ class Home : AppCompatActivity(), AnkoLogger,
             toggle.syncState()
 
             ft = supportFragmentManager.beginTransaction()
-
             val fragment = HomeFragment.newInstance()
             ft.replace(R.id.homeFrame, fragment)
             ft.commit()
@@ -89,6 +96,7 @@ class Home : AppCompatActivity(), AnkoLogger,
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+
 
         override fun onBackPressed() {
             if (drawerLayout.isDrawerOpen(GravityCompat.START))

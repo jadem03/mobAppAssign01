@@ -41,9 +41,6 @@ class HomeFragment : Fragment() {
 
     fun setButtonListener(layout: View) {
         layout.orderCoffeeBtn.setOnClickListener {
-
-            //Following code received from stack over flow thread:
-            //https://stackoverflow.com/questions/52318195/how-to-change-fragment-kotlin
             var fr = getFragmentManager()?.beginTransaction()
             fr?.replace(R.id.homeFrame, OrderFragment())
             fr?.commit()

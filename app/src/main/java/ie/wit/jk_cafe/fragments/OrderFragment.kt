@@ -95,7 +95,7 @@ class OrderFragment : Fragment(), AnkoLogger {
             val total = ("€"+layout.americano_quantity.value * 2.5+"0")
             val quantity = layout.americano_quantity.value
             val where = if (layout.where.checkedRadioButtonId == R.id.sitIn) "Sit In" else "Take Away"
-            var coffeeCup = if (layout.coffeeCup.checkedRadioButtonId == R.id.small) "Small" else "Large"
+            val coffeeCup = if (layout.coffeeCup.checkedRadioButtonId == R.id.small) "Small" else "Large"
             val collectTime = layout.collectTime.text.toString()
             writeNewOrder(OrderModel(total = total, quantity = quantity, where = where,
                 coffeeCup = coffeeCup, collectTime = collectTime, email = app.auth.currentUser!!.email)
