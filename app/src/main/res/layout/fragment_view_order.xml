@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
     tools:context=".fragments.ViewOrderFragment">
 
     <ScrollView
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,155 +19,281 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/colorBackground">
 
-            <TableRow>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/imageIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                <TableRow android:layout_margin="20dp"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/yourOrder"
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="@string/your_order"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="25sp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/editOrderBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimaryDark"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:src="@drawable/ic_edit"
+                        app:fabSize="normal" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/quantityText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quantity"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/viewQuantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/smallCup"
+                        android:textSize="12sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/cupText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/chooseSize"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/viewCupSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/smallCup"
+                        android:textSize="12sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/whereText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/where2"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/viewWhere"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/smallCup"
+                        android:textSize="12sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/timeText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/collection_Time"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/viewTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/smallCup"
+                        android:textSize="12sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/totalText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/viewTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/smallCup"
+                        android:textSize="12sp" />
+                </TableRow>
+            </TableLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp">
+
+                <TextView
+                    android:id="@+id/Payment"
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="@string/payment"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pay"
+                    android:layout_marginBottom="20dp"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+
+                <TableRow
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/card"
+                        android:textColor="@color/colorPrimary" />
+
+                    <EditText
+                        android:id="@+id/cardNum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/colorWhite"
+                        android:hint="@string/card_number"
+                        android:inputType="number"
+                        android:maxLength="18"
+                        android:padding="8dp"
+                        android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/asterisk01"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/asterisk"
+                        android:visibility="gone"
+                        android:textColor="@color/colorRed"
+                        android:textSize="18sp"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/cvs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/cvs"
+                        android:textColor="@color/colorPrimary" />
+
+                    <EditText
+                        android:id="@+id/cvsNum"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/colorWhite"
+                        android:hint="@string/cvs_number"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:padding="8dp"
+                        android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/asterisk02"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/asterisk"
+                        android:visibility="gone"
+                        android:textColor="@color/colorRed"
+                        android:textSize="18sp"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/card_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/card_name"
+                        android:textColor="@color/colorPrimary" />
+
+                    <EditText
+                        android:id="@+id/cardName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorWhite"
+                        android:hint="@string/cardName"
+                        android:inputType="text"
+                        android:maxLength="20"
+                        android:padding="8dp"
+                        android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/asterisk03"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/asterisk"
+                        android:visibility="gone"
+                        android:textColor="@color/colorRed"
+                        android:textSize="18sp"/>
+                </TableRow>
+                <TextView
+                    android:id="@+id/errorMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/fill_all_fields"
+                    android:textColor="@color/colorRed"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+                <Button
+                    android:id="@+id/payBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_margin="20dp"
-                    android:layout_gravity="center"
-                    app:srcCompat="@mipmap/coffee_cup02" />
-
-                <TextView
-                    android:id="@+id/yourOrder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/your_order"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="25sp" />
-            </TableRow>
-
-            <TableRow>
-                <TextView
-                    android:id="@+id/coffeeCup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp" />
-            </TableRow>
-
-            <TableRow>
-                <TextView
-                    android:id="@+id/where"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text=""
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:id="@+id/collectTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:id="@+id/orderTotal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp" />
-            </TableRow>
-        </TableLayout>
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp">
-            <TextView
-                android:id="@+id/pay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:layout_margin="10dp"
-                android:text="@string/pay"/>
-            <TableRow>
-                <TextView
-                    android:id="@+id/card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/card"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_marginEnd="10dp"/>
-                <EditText
-                    android:id="@+id/cardNum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:layout_gravity="center"
-                    android:hint="@string/card_number"
-                    android:maxLength="16"
-                    android:padding="8dp"
-                    android:background="@color/colorWhite"/>
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:id="@+id/cvs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cvs"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_marginEnd="10dp"/>
-                <EditText
-                    android:id="@+id/cvsNum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:hint="@string/cvs_number"
-                    android:maxLength="3"
-                    android:padding="8dp"
-                    android:background="@color/colorWhite"/>
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:id="@+id/card_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/card_name"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_marginEnd="10dp"/>
-                <EditText
-                    android:id="@+id/cardName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:hint="@string/cardName"
-                    android:maxLength="20"
-                    android:padding="8dp"
-                    android:background="@color/colorWhite"/>
-            </TableRow>
-            <Button
-                android:id="@+id/payBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/confirm_order"
-                android:textColor="@color/colorWhite"
-                android:layout_marginStart="100dp"
-                android:layout_marginEnd="100dp"
-                android:layout_marginTop="30dp"
-                android:background="@color/colorPrimary"
-           />
-        </TableLayout>
+                    android:background="@color/colorPrimary"
+                    android:padding="12dp"
+                    android:text="@string/confirm_order"
+                    android:textColor="@color/colorWhite" />
+            </TableLayout>
         </LinearLayout>
 
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,6 +25,8 @@ import android.content.Intent
 class OrderFragment : Fragment(), AnkoLogger {
 
     lateinit var app: MainActivity
+    var order = OrderModel()
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app=activity?.application as MainActivity
@@ -77,7 +79,7 @@ class OrderFragment : Fragment(), AnkoLogger {
         {
             val clock = TimePickerDialog(activity,
                 TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                    if(!(hourOfDay <= 7 || hourOfDay >= 18 || hourOfDay < hour))
+                    if(!(hourOfDay <= 7 || hourOfDay >= 2 || hourOfDay < hour))
                     {
                         val time = String.format("$hourOfDay:%02d", minute)
                         layout.collectTime.setText(time)
@@ -99,25 +101,18 @@ class OrderFragment : Fragment(), AnkoLogger {
 
     private fun setButtonListener(layout:View) {
         layout.orderBtn.setOnClickListener {
-            val total = ("€"+layout.americano_quantity.value * 2.5+"0")
-
-            val quantity = layout.americano_quantity.value
-
-            val editText = layout.editText.text.toString()
-
-            val where = if (layout.where.checkedRadioButtonId == R.id.sitIn) "Sit In" else "Take Away"
-
-            val coffeeCup = if (layout.coffeeCup.checkedRadioButtonId == R.id.small) "Small" else "Large"
-
-            val collectTime = layout.collectTime.text.toString()
             
-            writeNewOrder(OrderModel(total = total, quantity = quantity, editText = editText, where = where,
-                coffeeCup = coffeeCup, collectTime = collectTime, email = app.auth.currentUser!!.email, profilePic = app.userImage.toString())
-            )
-            var fr = getFragmentManager()?.beginTransaction()
-            fr?.replace(R.id.homeFrame, ReceiptsFragment())
-            fr?.addToBackStack(null)
-            fr?.commit()
+            order.total = ("€"+layout.americano_quantity.value * 2.5+"0")
+            order.quantity = layout.americano_quantity.value
+            order.editText = layout.editText.text.toString()
+            order.where = if (layout.where.checkedRadioButtonId == R.id.sitIn) "Sit In" else "Take Away"
+            order.coffeeCup = if (layout.coffeeCup.checkedRadioButtonId == R.id.small) "Small" else "Large"
+            order.collectTime = layout.collectTime.text.toString()
+
+            activity!!.supportFragmentManager.beginTransaction()
+                .replace(R.id.homeFrame, ViewOrderFragment.newInstance(order))
+                .addToBackStack(null)
+                .commit()
         }
     }
 
@@ -129,17 +124,6 @@ class OrderFragment : Fragment(), AnkoLogger {
         super.onPause()
         app.database.child("user-orders")
             .child(app.auth.currentUser!!.uid)
-    }
-
-    private fun writeNewOrder(order:OrderModel){
-        val uid = app.auth.currentUser!!.uid
-        val key = app.database.child("orders").push().key
-        order.uid = key
-        val orderValues = order.toMap()
-        val childUpdates = HashMap<String, Any>()
-        childUpdates["/orders/$key"]=orderValues
-        childUpdates["/user-orders/$uid/$key"]=orderValues
-        app.database.updateChildren(childUpdates)
     }
 
 }

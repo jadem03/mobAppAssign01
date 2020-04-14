@@ -17,8 +17,6 @@ import java.util.*
 
 class HomeFragment : Fragment() {
 
-    lateinit var ft: FragmentTransaction
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -47,7 +45,7 @@ class HomeFragment : Fragment() {
     private fun buttonListener(layout: View) {
         val currentTime = LocalTime.now()
         val openTime = LocalTime.of(7, 0, 10)
-        val closeTime = LocalTime.of(22, 0, 10)
+        val closeTime = LocalTime.of(23, 59, 10)
 
         layout.orderCoffeeBtn.setOnClickListener {
             if (currentTime > openTime && currentTime < closeTime) {

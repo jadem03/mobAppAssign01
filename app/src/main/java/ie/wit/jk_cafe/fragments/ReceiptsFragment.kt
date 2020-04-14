@@ -1,5 +1,6 @@
 package ie.wit.jk_cafe.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +22,10 @@ import ie.wit.jk_cafe.utils.SwipeToEditCallback
 import kotlinx.android.synthetic.main.fragment_receipts.view.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import java.security.Timestamp
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ReceiptsFragment : Fragment(), AnkoLogger, OrderListener {
 
@@ -117,6 +122,7 @@ class ReceiptsFragment : Fragment(), AnkoLogger, OrderListener {
     }
 
     override fun onOrderClick(order: OrderModel) {
+        
         activity!!.supportFragmentManager.beginTransaction()
             .replace(R.id.homeFrame, EditOrderFragment.newInstance(order))
             .addToBackStack(null)

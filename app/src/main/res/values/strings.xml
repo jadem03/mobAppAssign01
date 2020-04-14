@@ -80,11 +80,17 @@
     <string name="cvs">CVS number:</string>
     <string name="cvs_number">000</string>
     <string name="card_name">Card Holder Name:</string>
-    <string name="cardName">First Name Last Name</string>
+    <string name="cardName">Your Name Here</string>
     <string name="confirm_order">Confirm Order</string>
     <string name="action_edit">Edit</string>
     <string name="update_order">Update Order</string>
     <string name="totalPrice">€0.00</string>
     <string name="aboutUs">About Us</string>
+    <string name="quantity">Quantity:</string>
+    <string name="where2">Sit In/Takeaway:</string>
+    <string name="back">Back</string>
+    <string name="payment">Payment Details</string>
+    <string name="fill_all_fields">* Fill in all Fields</string>
+    <string name="asterisk">*</string>
 
 </resources>
