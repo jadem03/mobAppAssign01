@@ -50,11 +50,14 @@ class OrderAdapter constructor(var orders: ArrayList<OrderModel>,
             itemView.tag = order
             itemView.where.text = order.where
             itemView.orderQuantity.text = order.quantity.toString()
+            itemView.editText.text = order.editText
             itemView.coffeeCup.text = order.coffeeCup
             itemView.orderTotal.text = order.total
             itemView.collectTime.text = order.collectTime
             itemView.imageIcon.setImageResource(R.mipmap.coffee_cup02)
-            itemView.setOnClickListener{listener.onOrderClick(order)}
+            itemView.setOnClickListener{
+                listener.onOrderClick(order)
+            }
         }
     }
 }

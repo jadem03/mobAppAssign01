@@ -10,11 +10,13 @@ import kotlinx.android.parcel.Parcelize
 data class OrderModel(
     var uid: String? = "",
     var quantity: Int = 0,
+    var editText: String = "",
     var coffeeCup: String = "N/A",
-    var where: String = "N/A",
+    var where: String = " ",
     var collectTime: String = " ",
     var total: String = "",
-    var email: String? = "jay@cafe.com"): Parcelable
+    var email: String? = "jay@cafe.com",
+    var profilePic: String = ""): Parcelable
 {
     @Exclude
     fun toMap(): Map<String, Any?>
@@ -22,11 +24,13 @@ data class OrderModel(
         return mapOf(
             "uid" to uid,
             "quantity" to quantity,
+            "editText" to editText,
             "coffeeCup" to coffeeCup,
             "where" to where,
             "collectTime" to collectTime,
             "total" to total,
-            "email" to email
+            "email" to email,
+            "profilePic" to profilePic
         )
     }
 }

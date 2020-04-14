@@ -1,12 +1,14 @@
 package ie.wit.jk_cafe.fragments
 
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.content.Intent.getIntent
+import android.content.Intent.getIntentOld
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -14,21 +16,19 @@ import com.google.firebase.database.ValueEventListener
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.main.MainActivity
 import ie.wit.jk_cafe.models.OrderModel
-import kotlinx.android.synthetic.main.fragment_edit_order.*
 import kotlinx.android.synthetic.main.fragment_edit_order.view.*
 import kotlinx.android.synthetic.main.fragment_edit_order.view.edit_where
+import kotlinx.android.synthetic.main.fragment_edit_order.view.sitIn
+import kotlinx.android.synthetic.main.fragment_order.*
 import kotlinx.android.synthetic.main.fragment_order.view.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import java.lang.reflect.Array.getInt
 import java.util.*
-import android.widget.RadioGroup
-import kotlinx.android.synthetic.main.fragment_order.*
-import kotlinx.android.synthetic.main.fragment_order.view.coffeeCup
 
 class EditOrderFragment : Fragment(), AnkoLogger {
 
     lateinit var app: MainActivity
-    lateinit var editOrderFragment: View
     var editOrder: OrderModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,49 +45,22 @@ class EditOrderFragment : Fragment(), AnkoLogger {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        editOrderFragment = inflater.inflate(R.layout.fragment_edit_order, container, false)
+        val editOrderFragment = inflater.inflate(R.layout.fragment_edit_order, container, false)
         activity?.title = getString(R.string.action_edit)
 
-        editOrderFragment.edit_americano_quantity.minValue = 1
-        editOrderFragment.edit_americano_quantity.maxValue = 5
-        var orderTotal = edit_americano_quantity.minValue * 2.5
-        editOrderFragment.total.text = "€"+"$orderTotal"+"0"
-        editOrderFragment.edit_americano_quantity.setOnValueChangedListener { picker, oldVal, newVal ->
-            val orderTotal = newVal * 2.5
-            editOrderFragment.edit_total.text = "€"+"$orderTotal"+"0"
-        }
-
-        val calendar = Calendar.getInstance()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
-        editOrderFragment.edit_collectTime.setOnClickListener()
-        {
-            val clock = TimePickerDialog(activity,
-                TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                    if(hourOfDay>hour)
-                    {
-                        var time = String.format("$hourOfDay:%02d", minute)
-                        editOrderFragment.edit_collectTime.setText(time)
-                    }
-                    else
-                    {
-                        Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show()
-                        var time = String.format("$hour:$minute")
-                        editOrderFragment.edit_collectTime.setText(time) }
-                }, hour, minute, true)
-            clock.show()
-        }
-
-        editOrderFragment.edit_americano_quantity.value = editOrder!!.quantity
-        editOrderFragment.edit_collectTime.setText(editOrder!!.collectTime)
-        
-
         editOrderFragment.updateBtn.setOnClickListener{
-            updateOrderData()
+            updateOrderData(editOrderFragment)
             updateOrder(editOrder!!.uid, editOrder!!)
             updateUserOrder(app.auth.currentUser!!.uid,
                 editOrder!!.uid, editOrder!!)
         }
+
+        editOrderFragment.edit_americano_quantity.setValue(editOrder!!.quantity)
+        editOrderFragment.edit_collectTime.setText(editOrder!!.collectTime)
+
+        setQuantity(editOrderFragment)
+        setOrderTime(editOrderFragment)
+
         return editOrderFragment
     }
 
@@ -100,16 +73,50 @@ class EditOrderFragment : Fragment(), AnkoLogger {
             }
     }
 
-    fun updateOrderData(){
+    private fun setOrderTime(layout: View) {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
 
-        editOrder!!.collectTime = edit_collectTime.text.toString()
-        editOrder!!.quantity = editOrderFragment.edit_americano_quantity.value
-        editOrder!!.total = ("€"+editOrderFragment.edit_americano_quantity.value * 2.5+"0")
-        editOrder!!.where = if (editOrderFragment.edit_where.checkedRadioButtonId == R.id.sitIn) "Sit In" else "Take Away"
-        editOrder!!.coffeeCup = if (editOrderFragment.edit_coffeeCup.checkedRadioButtonId == R.id.small) "Small" else "Large"
+        layout.edit_collectTime.setOnClickListener()
+        {
+            val clock = TimePickerDialog(activity,
+                TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                    if (hourOfDay > hour) {
+                        var time = String.format("$hourOfDay:%02d", minute)
+                        layout.edit_collectTime.setText(time)
+                    } else {
+                        Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show()
+                        var time = String.format("$hour:$minute")
+                        layout.edit_collectTime.setText(time)
+                    }
+                }, hour, minute, true)
+            clock.show()
+        }
     }
 
-    fun updateUserOrder(userId: String, uid: String?, order: OrderModel) {
+    private fun setQuantity(layout: View)
+    {
+        layout.edit_americano_quantity.minValue = 1
+        layout.edit_americano_quantity.maxValue = 5
+        var orderTotal = layout.edit_americano_quantity.minValue * 2.5
+        layout.edit_total.setText("€"+"$orderTotal"+"0")
+        layout.edit_americano_quantity.setOnValueChangedListener { picker, oldVal, newVal ->
+            orderTotal = newVal * 2.5
+            layout.edit_total.text = "€"+"$orderTotal"+"0"
+        }
+    }
+
+    fun updateOrderData(layout: View){
+
+        editOrder!!.collectTime = layout.edit_collectTime.text.toString()
+        editOrder!!.quantity = layout.edit_americano_quantity.value
+        editOrder!!.total = ("€"+layout.edit_americano_quantity.value * 2.5+"0")
+        editOrder!!.where = if (layout.edit_where.checkedRadioButtonId == R.id.sitIn) "Sit In" else "Take Away"
+        editOrder!!.coffeeCup = if (layout.edit_coffeeCup.checkedRadioButtonId == R.id.small) "Small" else "Large"
+    }
+
+    private fun updateUserOrder(userId: String, uid: String?, order: OrderModel) {
         app.database.child("user-orders").child(userId).child(uid!!.toString())
             .addListenerForSingleValueEvent(
                 object : ValueEventListener {

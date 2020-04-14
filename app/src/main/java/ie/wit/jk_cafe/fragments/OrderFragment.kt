@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.main.MainActivity
 import ie.wit.jk_cafe.models.OrderModel
@@ -19,10 +18,9 @@ import kotlinx.android.synthetic.main.fragment_order.view.collectTime
 import kotlinx.android.synthetic.main.fragment_order.view.total
 import kotlinx.android.synthetic.main.fragment_order.view.where
 import org.jetbrains.anko.AnkoLogger
-import java.time.LocalTime
 import java.util.*
 import java.util.Calendar
-
+import android.content.Intent
 
 class OrderFragment : Fragment(), AnkoLogger {
 
@@ -102,15 +100,23 @@ class OrderFragment : Fragment(), AnkoLogger {
     private fun setButtonListener(layout:View) {
         layout.orderBtn.setOnClickListener {
             val total = ("€"+layout.americano_quantity.value * 2.5+"0")
+
             val quantity = layout.americano_quantity.value
+
+            val editText = layout.editText.text.toString()
+
             val where = if (layout.where.checkedRadioButtonId == R.id.sitIn) "Sit In" else "Take Away"
+
             val coffeeCup = if (layout.coffeeCup.checkedRadioButtonId == R.id.small) "Small" else "Large"
+
             val collectTime = layout.collectTime.text.toString()
-            writeNewOrder(OrderModel(total = total, quantity = quantity, where = where,
-                coffeeCup = coffeeCup, collectTime = collectTime, email = app.auth.currentUser!!.email)
+            
+            writeNewOrder(OrderModel(total = total, quantity = quantity, editText = editText, where = where,
+                coffeeCup = coffeeCup, collectTime = collectTime, email = app.auth.currentUser!!.email, profilePic = app.userImage.toString())
             )
             var fr = getFragmentManager()?.beginTransaction()
             fr?.replace(R.id.homeFrame, ReceiptsFragment())
+            fr?.addToBackStack(null)
             fr?.commit()
         }
     }

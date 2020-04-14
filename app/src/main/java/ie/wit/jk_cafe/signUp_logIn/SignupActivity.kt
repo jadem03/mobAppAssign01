@@ -17,11 +17,15 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import ie.wit.jk_cafe.R
+import ie.wit.jk_cafe.activities.Home
 import ie.wit.jk_cafe.main.MainActivity
 import kotlinx.android.synthetic.main.signup_activity.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import java.util.regex.Pattern
 
@@ -41,6 +45,8 @@ class SignUpActivity: AppCompatActivity(), AnkoLogger {
             .build()
 
         app.googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        app.storage = FirebaseStorage.getInstance().reference
 
         signUpBtn.setOnClickListener {
             signUp()
@@ -144,6 +150,8 @@ class SignUpActivity: AppCompatActivity(), AnkoLogger {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = app.auth.currentUser
+                    app.database = FirebaseDatabase.getInstance().reference
+                    startActivity<Home>()
                 } else {
                     toast("Fail")
                 }

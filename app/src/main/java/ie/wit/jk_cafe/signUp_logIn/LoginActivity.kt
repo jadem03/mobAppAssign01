@@ -11,12 +11,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.activities.Home
 import ie.wit.jk_cafe.main.MainActivity
 import kotlinx.android.synthetic.main.login_activity.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class LoginActivity: AppCompatActivity(), AnkoLogger {
@@ -35,6 +38,8 @@ class LoginActivity: AppCompatActivity(), AnkoLogger {
             .build()
 
         app.googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        app.storage = FirebaseStorage.getInstance().reference
 
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
@@ -97,6 +102,7 @@ class LoginActivity: AppCompatActivity(), AnkoLogger {
     }
 
     companion object {
+        private const val TAG = "EmailPassword"
         private const val RC_SIGN_IN = 9001
     }
 
@@ -117,6 +123,7 @@ class LoginActivity: AppCompatActivity(), AnkoLogger {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account!!)
             } catch (e: ApiException) {
+                toast("FAILED")
             }
         }
     }
@@ -127,6 +134,8 @@ class LoginActivity: AppCompatActivity(), AnkoLogger {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = app.auth.currentUser
+                    app.database = FirebaseDatabase.getInstance().reference
+                    startActivity<Home>()
                 } else {
                     toast("Fail")
                 }

@@ -43,7 +43,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"/>
+
             </TableRow>
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:autofillHints="@string/order"
+                android:hint="@string/order"
+                />
 
         <TextView
             android:id="@+id/chooseSize"
@@ -146,7 +156,7 @@
                 android:focusable="false"
                 android:hint="@string/collectTime"
                 android:maxLength="10"
-                android:inputType="date"
+                android:inputType="time"
                 android:textColor="@color/colorGrey" />
 
         </TableRow>
