@@ -79,7 +79,8 @@ class OrderFragment : Fragment(), AnkoLogger {
         {
             val clock = TimePickerDialog(activity,
                 TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                    if(!(hourOfDay <= 7 || hourOfDay >= 2 || hourOfDay < hour))
+                    if(!(hourOfDay <= 7 || hourOfDay >= 18
+                                || hourOfDay < hour))
                     {
                         val time = String.format("$hourOfDay:%02d", minute)
                         layout.collectTime.setText(time)

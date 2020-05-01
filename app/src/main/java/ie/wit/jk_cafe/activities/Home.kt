@@ -2,7 +2,9 @@ package ie.wit.jk_cafe.activities
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
@@ -44,8 +47,20 @@ class Home : AppCompatActivity(), AnkoLogger,
             setSupportActionBar(this.toolbar)
 
             app = application as MainActivity
+
             app.storage = FirebaseStorage.getInstance().reference
             checkExistingPhoto(app,this)
+
+            app.currentLocation = Location("Default").apply {
+               // latitude = 52.245696
+                //longitude = -7.139102
+            }
+
+            app.locationClient = LocationServices.getFusedLocationProviderClient(this)
+            if(checkLocationPermissions(this)) {
+                // todo get the current location
+                setCurrentLocation(app)
+            }
 
             navView.setNavigationItemSelectedListener(this)
             navView.getHeaderView(0).headerEmail.text = app.auth.currentUser?.email
@@ -169,6 +184,20 @@ class Home : AppCompatActivity(), AnkoLogger,
                     }
                 }
             }
+        }
+
+        override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+            if (isPermissionGranted(requestCode, grantResults)) {
+                // todo get the current location
+                setCurrentLocation(app)
+            } else {
+                // permissions denied, so use the default location
+                //app.currentLocation = Location("Default").apply {
+                //                    latitude = 52.245696
+                //                    longitude = -7.139102
+                //                }
+            }
+            Log.v("You are here", "Home LAT: ${app.currentLocation.latitude} LNG: ${app.currentLocation.longitude}")
         }
 
         override fun onBackPressed() {
