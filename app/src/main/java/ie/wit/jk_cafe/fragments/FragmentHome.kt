@@ -35,7 +35,7 @@ class FragmentHome : Fragment(){
     private fun buttonListener(layout:View) {
         val currentTime = LocalTime.now()
         val openTime = LocalTime.of(7, 0, 10)
-        val closeTime = LocalTime.of(23, 0, 10)
+        val closeTime = LocalTime.of(18, 0, 10)
 
             layout.orderCoffeeBtn.setOnClickListener {
             if (currentTime > openTime && currentTime < closeTime) {
