@@ -1,6 +1,5 @@
 package ie.wit.jk_cafe.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -54,11 +53,10 @@ class MapsFragment : SupportMapFragment(), OnMapReadyCallback {
         builder.include(waterford)
 
         val bounds = builder.build()
-        val padding = 10
+        val padding = 50
         val camera = CameraUpdateFactory.newLatLngBounds(bounds, padding)
 
         app.mMap.moveCamera(camera)
-
     }
 
     companion object {

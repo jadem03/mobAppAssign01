@@ -120,7 +120,7 @@ class OrderFragment : Fragment(), AnkoLogger{
     }
 
     private fun setButtonListener(layout:View) {
-        layout.update.setOnClickListener {
+        layout.order.setOnClickListener {
             order.total = ("€"+layout.quantity.value * 2.5+"0")
             order.quantity = layout.quantity.value
             order.editText = layout.editText.text.toString()

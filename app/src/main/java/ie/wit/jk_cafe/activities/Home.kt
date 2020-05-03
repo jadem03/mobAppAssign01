@@ -82,7 +82,6 @@ class Home : AppCompatActivity(), AnkoLogger,
 
             val navView: BottomNavigationView = findViewById(R.id.bottomNav)
             navView.setOnNavigationItemSelectedListener(this)
-            navView.selectedItemId = R.id.nav_order
 
             ft = supportFragmentManager.beginTransaction()
             val fragment = FragmentHome.newInstance()
@@ -93,10 +92,11 @@ class Home : AppCompatActivity(), AnkoLogger,
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
             val navView: BottomNavigationView = findViewById(R.id.bottomNav)
             navView.setOnNavigationItemSelectedListener(this)
+
             when (item.itemId) {
-                R.id.nav_order -> navigateTo(OrderFragment.newInstance())
-                R.id.nav_receipts -> navigateTo(ReceiptsFragment.newInstance())
-                R.id.nav_map -> navigateTo(MapsFragment.newInstance())
+                R.id.navi_order ->{checkTime()}
+                R.id.navi_receipts -> navigateTo(ReceiptsFragment.newInstance())
+                R.id.navi_map -> navigateTo(MapsFragment.newInstance())
             }
 
             when (item.itemId) {
@@ -107,29 +107,10 @@ class Home : AppCompatActivity(), AnkoLogger,
                 R.id.nav_logout -> onLogOut()
 
                 R.id.nav_order ->{
-                    val currentTime = LocalTime.now()
-                    val openTime = LocalTime.of(7, 0, 10)
-                    val closeTime = LocalTime.of(18, 0, 10)
-                    if (currentTime > openTime && currentTime < closeTime) {
-                        navigateTo(OrderFragment.newInstance())
-                    }
-                    else {
-                        val dialogBox = AlertDialog.Builder(this)
-                        dialogBox.setTitle("Sorry!")
-                        dialogBox.setMessage(
-                            "We're Closed!" +
-                                    "Our open times are 07am - 06pm Monday - Sunday."
-                        )
-                        dialogBox.setNeutralButton("OK") { dialog, which ->
-                            dialog.cancel()
-                        }
-                        val myDialog = dialogBox.create()
-                        myDialog.show()
-                    }
+                    checkTime()
                 }
-
-                else -> toast("You Selected Something Else")
             }
+
             drawerLayout.closeDrawer(GravityCompat.START)
             return true
         }
@@ -144,26 +125,7 @@ class Home : AppCompatActivity(), AnkoLogger,
                 R.id.action_home -> navigateTo(MapsFragment.newInstance())
 
                 R.id.action_order -> {
-                    val currentTime = LocalTime.now()
-                    val openTime = LocalTime.of(7, 0, 10)
-                    val closeTime = LocalTime.of(18, 0, 10)
-                    if (currentTime > openTime && currentTime < closeTime) {
-
-                        navigateTo(OrderFragment.newInstance())
-                    } else {
-                        val dialogBox = AlertDialog.Builder(this)
-                        dialogBox.setTitle("Sorry!")
-                        dialogBox.setMessage(
-                            "We're Closed!" +
-                                    "Our open times are 07am - 06pm Monday - Sunday."
-                        )
-
-                        dialogBox.setNeutralButton("OK") { dialog, which ->
-                            dialog.cancel()
-                        }
-                        val myDialog = dialogBox.create()
-                        myDialog.show()
-                    }
+                    checkTime()
                 }
 
                 R.id.action_receipts -> navigateTo(ReceiptsFragment.newInstance())
@@ -171,6 +133,28 @@ class Home : AppCompatActivity(), AnkoLogger,
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             return true
+        }
+
+        private fun checkTime(){
+            val currentTime = LocalTime.now()
+            val openTime = LocalTime.of(7, 0, 10)
+            val closeTime = LocalTime.of(18, 0, 10)
+            if (currentTime > openTime && currentTime < closeTime) {
+                navigateTo(OrderFragment.newInstance())
+            }
+            else {
+                val dialogBox = AlertDialog.Builder(this)
+                dialogBox.setTitle("Sorry!")
+                dialogBox.setMessage(
+                    "We're Closed!" +
+                            "Our open times are 07am - 06pm Monday - Sunday."
+                )
+                dialogBox.setNeutralButton("OK") { dialog, which ->
+                    dialog.cancel()
+                }
+                val myDialog = dialogBox.create()
+                myDialog.show()
+            }
         }
 
         private fun onLogOut(){
