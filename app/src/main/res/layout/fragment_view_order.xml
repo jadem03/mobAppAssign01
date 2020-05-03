@@ -54,6 +54,27 @@
                     android:gravity="center">
 
                     <TextView
+                        android:id="@+id/coffeeText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/type"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/viewCoffee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/smallCup"
+                        android:textSize="12sp" />
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <TextView
                         android:id="@+id/quantityText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

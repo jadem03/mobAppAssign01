@@ -5,6 +5,7 @@
     <color name="colorBright">#E7E09C</color>
     <color name="colorMedium">#E6FF8C27</color>
     <color name="colorBackground">#D8FFFACC</color>
+    <color name="colorAccent">#F7DECB</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGrey">#EB5C5C5C</color>
     <color name="colorRed">#FD0000</color>

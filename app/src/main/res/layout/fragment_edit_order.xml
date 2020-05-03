@@ -1,192 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/spinnerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/coffee"
+            android:textStyle="italic|bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/chooseQuantity"
-                android:layout_width="match_parent"
-                android:background="@color/colorPrimary"
-                android:padding="5dp"
-                android:text="@string/chooseQuantity"
-                android:textColor="@color/colorWhite" />
-            <TextView
-                android:id="@+id/americano"
+        <Spinner
+            android:id="@+id/edit_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:prompt="@string/coffee"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/spinnerText"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/quantityText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="124dp"
+            android:text="@string/quantity"
+            android:textStyle="italic|bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/spinnerText" />
+
+        <NumberPicker
+            android:id="@+id/edit_quantity"
+            style="@android:style/Widget.Material.NumberPicker"
+            android:layout_width="105dp"
+            android:layout_height="193dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toEndOf="@+id/quantityText"
+            app:layout_constraintTop_toBottomOf="@id/edit_spinner" />
+
+        <TextView
+            android:id="@+id/size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="156dp"
+            android:text="@string/chooseSize"
+            android:textStyle="italic|bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quantityText" />
+
+        <RadioGroup
+            android:id="@+id/edit_coffeeCup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintStart_toEndOf="@+id/size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_quantity">
+            <RadioButton
+                android:id="@+id/small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:text="@string/americano"
-                android:textSize="14sp" />
-            <TableRow>
-                <TextView
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_gravity="center"
-                    android:textSize="12sp"
-                    android:text="@string/a_descript" />
-
-                <NumberPicker
-                    android:id="@+id/edit_americano_quantity"
-                    style="@android:style/Widget.Material.NumberPicker"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
-            </TableRow>
-
-            <TextView
-                android:id="@+id/chooseSize"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/colorPrimary"
-                android:padding="8dp"
-                android:text="@string/chooseSize"
-                android:textColor="@color/colorWhite" />
-
-            <TableRow>
-                <ImageView
-                    android:id="@+id/smallOrder"
-                    android:layout_width="60dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="bottom"
-                    android:layout_marginStart="20dp"
-                    android:src="@mipmap/coffee_cup" />
-
-                <RadioGroup
-                    android:id="@+id/edit_coffeeCup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <RadioButton
-                        android:id="@+id/small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="@string/smallCup"
-
-                        android:textColor="@color/colorGrey" />
-
-                    <RadioButton
-                        android:id="@+id/large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="false"
-                        android:text="@string/largeCup"
-                        android:textColor="@color/colorGrey" />
-                </RadioGroup>
-            </TableRow>
-
-            <TextView
-                android:id="@+id/takeAwaySitIn"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/colorPrimary"
-                android:padding="5dp"
-                android:text="@string/where"
-                android:textColor="@color/colorWhite" />
-
-            <RadioGroup
-                android:id="@+id/edit_where"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="140dp">
-
-                <RadioButton
-                    android:id="@+id/sitIn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/sitIn"
-                    android:textColor="@color/colorGrey" />
-
-                <RadioButton
-                    android:id="@+id/takeaway"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="false"
-                    android:text="@string/takeaway"
-                    android:textColor="@color/colorGrey" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/time"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/colorPrimary"
-                android:padding="5dp"
-                android:text="@string/when_want_coffee"
-                android:textColor="@color/colorWhite" />
-
-            <TableRow>
-                <TextView
-                    android:id="@+id/chooseTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:text="@string/collection_Time" />
-
-                <EditText
-                    android:id="@+id/edit_collectTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:layout_gravity="center"
-                    android:focusable="false"
-                    android:hint="@string/collectTime"
-                    android:inputType="date"
-                    android:textColor="@color/colorGrey" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/colorPrimary"
-                android:padding="8dp">
-
-                <TextView
-                    android:id="@+id/Order"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="130dp"
-                    android:text="@string/total"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/edit_total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:textColor="@color/colorWhite"
-                    android:text="@string/totalPrice"
-                    android:textSize="18sp" />
-            </TableRow>
-
-            <Button
-                android:id="@+id/updateBtn"
-                android:layout_width="match_parent"
+                android:checked="true"
+                android:text="@string/smallCup"
+                android:textColor="@color/colorGrey" />
+            <RadioButton
+                android:id="@+id/large"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/colorPrimary"
-                android:text="@string/update_order"
-                android:textColor="@color/colorWhite" />
-        </TableLayout>
-    </LinearLayout>
+                android:checked="false"
+                android:text="@string/largeCup"
+                android:textColor="@color/colorGrey" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/whereText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
+            android:text="@string/where2"
+            android:textStyle="italic|bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/size" />
+
+        <RadioGroup
+            android:id="@+id/edit_where"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/whereText"
+            app:layout_constraintTop_toBottomOf="@id/edit_coffeeCup">
+            <RadioButton
+                android:id="@+id/sitIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/sitIn"
+                android:textColor="@color/colorGrey" />
+            <RadioButton
+                android:id="@+id/takeaway"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/takeaway"
+                android:textColor="@color/colorGrey" />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/edit_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="56dp"
+            android:hint="@string/notes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/whereText" />
+
+        <TextView
+            android:id="@+id/chooseTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="56dp"
+            android:text="@string/collection_Time"
+            android:textStyle="italic|bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_editText" />
+
+        <EditText
+            android:id="@+id/edit_collectTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/collectTime"
+            android:inputType="time"
+            android:maxLength="10"
+            android:textColor="@color/colorGrey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.552"
+            app:layout_constraintStart_toEndOf="@id/chooseTime"
+            app:layout_constraintTop_toBottomOf="@id/edit_editText" />
+
+        <TextView
+            android:id="@+id/Order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="48dp"
+            android:text="@string/total"
+            android:textSize="18sp"
+            android:textStyle="italic|bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chooseTime" />
+
+        <TextView
+            android:id="@+id/edit_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="36dp"
+            android:text="@string/totalPrice"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.466"
+            app:layout_constraintStart_toEndOf="@id/Order"
+            app:layout_constraintTop_toBottomOf="@id/edit_collectTime" />
+
+        <Button
+            android:id="@+id/updateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/update_order"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Order"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

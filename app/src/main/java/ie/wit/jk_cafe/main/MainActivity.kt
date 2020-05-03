@@ -10,6 +10,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -19,7 +20,7 @@ import org.jetbrains.anko.AnkoLogger
 class MainActivity : Application(), AnkoLogger {
 
     lateinit var database: DatabaseReference
-    lateinit var auth: FirebaseAuth
+    lateinit var currentUser: FirebaseUser
     lateinit var googleSignInClient: GoogleSignInClient
     lateinit var storage: StorageReference
     lateinit var userImage: Uri
@@ -33,7 +34,6 @@ class MainActivity : Application(), AnkoLogger {
     override fun onCreate() {
         super.onCreate()
 
-        auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance().reference
         storage = FirebaseStorage.getInstance().reference
 

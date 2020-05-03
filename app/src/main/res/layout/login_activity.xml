@@ -2,92 +2,111 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@mipmap/logo_01"
+            android:layout_width="305dp"
+            android:layout_height="138dp"
             android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:contentDescription="@string/a_descript" />
-
-        <EditText
-            android:id="@+id/emailText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:hint="@string/hint_email"
-            android:inputType="textEmailAddress"
-            android:padding="8dp"
-            android:textSize="12sp"
-            android:autofillHints="@string/hint_email" />
-
-        <EditText
-            android:id="@+id/passwordText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:hint="@string/hint_password"
-            android:autofillHints="@string/hint_password"
-            android:inputType="textPassword"
-            android:padding="8dp"
-            android:textSize="12sp" />
-
-    <Button
-        android:id="@+id/loginBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_gravity="center"
-        android:background="@color/colorPrimary"
-        android:text="@string/login"
-        android:textColor="@color/colorWhite"
-        android:textSize="14sp"/>
-
-        <LinearLayout
-            android:id="@+id/googleSignInButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:orientation="horizontal">
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/google_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/login_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:textAlignment="center"
-            android:text="@string/SignupText"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            android:layout_marginBottom="40dp"
+            android:contentDescription="@string/fui_accessibility_logo"
+            android:padding="10dp"
+            android:src="@drawable/logo02" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/emailButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <Button
-            android:id="@+id/signUpTxtBtn"
-            android:layout_width="match_parent"
+            android:id="@+id/emailSignInButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@null"
-            android:text="@string/signupBtn"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/fui_idp_button_background_email"
+            android:drawableStart="@android:drawable/sym_action_email"
+            android:gravity="center_vertical"
+            android:paddingStart="30dip"
+            android:paddingEnd="35dip"
+            android:singleLine="true"
+            android:text="@string/sign_in_email"
+            android:textAlignment="center"
+            android:textAllCaps="false" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/phoneButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <Button
+            android:id="@+id/phoneSignInButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/fui_idp_button_background_phone"
+            android:drawableStart="@drawable/fui_ic_phone_white_24dp"
+            android:gravity="center_vertical"
+            android:text="@string/sign_in_phone"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:paddingStart="30dip"
+            android:paddingEnd="26dip"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/googleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+        <Button
+            android:id="@+id/googleSignInButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@color/colorMedium"
+            android:drawableStart="@drawable/fui_ic_googleg_color_24dp"
+            android:gravity="center_vertical"
+            android:text="@string/sign_in_google"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:paddingStart="30dip"
+            android:paddingEnd="26dip"
+            android:singleLine="true"/>
+    </LinearLayout>
     </LinearLayout>
 </ScrollView>

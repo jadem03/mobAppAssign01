@@ -52,7 +52,7 @@ class ReceiptsFragment : Fragment(), AnkoLogger, OrderListener {
 
                 adapter.removeAt(viewHolder.adapterPosition)
                 deleteOrder((viewHolder.itemView.tag as OrderModel).uid)
-                deleteUserOrder(app.auth.currentUser!!.uid,
+                deleteUserOrder(app.currentUser!!.uid,
                     (viewHolder.itemView.tag as OrderModel).uid)
             }
         }
@@ -82,7 +82,7 @@ class ReceiptsFragment : Fragment(), AnkoLogger, OrderListener {
     fun setSwipeRefresh() {
         receiptsFragment.swiperefresh.setOnRefreshListener {
             receiptsFragment.swiperefresh.isRefreshing = true
-            getAllOrders(app.auth.currentUser!!.uid)
+            getAllOrders(app.currentUser!!.uid)
         }
     }
 
@@ -127,7 +127,7 @@ class ReceiptsFragment : Fragment(), AnkoLogger, OrderListener {
 
     override fun onResume() {
         super.onResume()
-        getAllOrders(app.auth.currentUser!!.uid)
+        getAllOrders(app.currentUser!!.uid)
     }
 
     private fun getAllOrders(userId:String)

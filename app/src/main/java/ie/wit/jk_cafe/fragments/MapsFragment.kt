@@ -1,15 +1,8 @@
 package ie.wit.jk_cafe.fragments
 
-
 import android.app.AlertDialog
 import android.os.Bundle
-import android.provider.Settings.Global.getString
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.FragmentTransaction
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,12 +14,8 @@ import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.helpers.setMapMarker
 import ie.wit.jk_cafe.helpers.trackLocation
 import ie.wit.jk_cafe.main.MainActivity
-import kotlinx.android.synthetic.main.fragment_home.view.orderCoffeeBtn
-import org.jetbrains.anko.toast
-import java.time.LocalTime
-import java.util.*
 
-class HomeFragment : SupportMapFragment(), OnMapReadyCallback {
+class MapsFragment : SupportMapFragment(), OnMapReadyCallback {
 
     lateinit var app: MainActivity
 
@@ -75,38 +64,10 @@ class HomeFragment : SupportMapFragment(), OnMapReadyCallback {
     companion object {
         @JvmStatic
         fun newInstance() =
-            HomeFragment().apply {
+            MapsFragment().apply {
                 arguments = Bundle().apply {
                 }
             }
     }
 
-    private fun buttonListener(layout: View) {
-        val currentTime = LocalTime.now()
-        val openTime = LocalTime.of(7, 0, 10)
-        val closeTime = LocalTime.of(23, 59, 10)
-
-        layout.orderCoffeeBtn.setOnClickListener {
-            if (currentTime > openTime && currentTime < closeTime) {
-
-                var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.homeFrame, OrderFragment())
-                fr?.commit()
-            }
-            else
-            {
-                val dialogBox = AlertDialog.Builder(activity)
-                dialogBox.setTitle("Sorry!")
-                dialogBox.setMessage("We're Closed!" +
-                        "Our open times are 07am - 06pm Monday - Sunday.")
-
-                dialogBox.setNeutralButton("OK") {dialog, which ->
-                    dialog.cancel()
-                }
-                val myDialog = dialogBox.create()
-                myDialog.show()
-
-            }
-        }
-    }
 }

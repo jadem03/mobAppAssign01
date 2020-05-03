@@ -16,7 +16,10 @@
             android:id="@+id/nav_receipts"
             android:icon="@drawable/ic_menu_receipts"
             android:title="@string/menu_receipts" />
-
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_marker"
+            android:title="@string/map" />
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_menu_aboutus"
@@ -25,14 +28,6 @@
 
     <item android:title="Communicate">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"

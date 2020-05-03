@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/coffee_cup"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="100dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/order"
+            android:src="@mipmap/coffee_cup02" />
+
+        <Button
+            android:id="@+id/orderCoffeeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/coffee"
+            android:textSize="14sp"
+            android:textColor="@color/colorWhite"
+            android:textColorHighlight="@color/colorPrimaryDark" />
+    </LinearLayout>
+</ScrollView>

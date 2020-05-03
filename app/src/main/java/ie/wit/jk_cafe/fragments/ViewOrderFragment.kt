@@ -1,30 +1,18 @@
 package ie.wit.jk_cafe.fragments
 
 import android.os.Bundle
-import android.telecom.Call
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.fragment.app.FragmentManager
-
+import com.google.firebase.auth.FirebaseAuth
 import ie.wit.jk_cafe.R
 import ie.wit.jk_cafe.main.MainActivity
 import ie.wit.jk_cafe.models.OrderModel
-import kotlinx.android.synthetic.main.fragment_edit_order.view.*
-import kotlinx.android.synthetic.main.fragment_order.view.*
-import kotlinx.android.synthetic.main.fragment_order.view.coffeeCup
-import kotlinx.android.synthetic.main.fragment_order.view.collectTime
-import kotlinx.android.synthetic.main.fragment_order.view.where
-import kotlinx.android.synthetic.main.fragment_view_order.*
 import kotlinx.android.synthetic.main.fragment_view_order.view.*
 import kotlinx.android.synthetic.main.fragment_view_order.view.viewCupSize
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.toast
 import java.util.HashMap
-import java.util.regex.Pattern
-import kotlin.math.absoluteValue
 
 class ViewOrderFragment : Fragment(), AnkoLogger {
 
@@ -48,6 +36,7 @@ class ViewOrderFragment : Fragment(), AnkoLogger {
         // Inflate the layout for this fragment
         viewOrderFragment = inflater.inflate(R.layout.fragment_view_order, container, false)
 
+        viewOrderFragment.viewCoffee.text = viewOrder!!.coffee
         viewOrderFragment.viewCupSize.text = viewOrder!!.coffeeCup
         viewOrderFragment.viewQuantity.text = viewOrder!!.quantity.toString()
         viewOrderFragment.viewWhere.text = viewOrder!!.where
@@ -77,30 +66,29 @@ class ViewOrderFragment : Fragment(), AnkoLogger {
     }
 
     private fun setButtonListener(layout:View) {
+        val coffee = viewOrder!!.coffee
         val total = viewOrder!!.total
         val quantity = viewOrder!!.quantity
         val where = viewOrder!!.where
         val coffeeCup = viewOrder!!.coffeeCup
+        val request = viewOrder!!.request
         val collectTime = viewOrder!!.collectTime
-        
+        val points = 1
+
         layout.payBtn.setOnClickListener {
-            if (layout.cardNum.text.isNotEmpty() || layout.cvsNum.text.isNotEmpty() || layout.cardName.text.isNotEmpty())
-            {
+
+
+            if (layout.cardNum.text.isNotEmpty() || layout.cvsNum.text.isNotEmpty() || layout.cardName.text.isNotEmpty()) {
                 writeNewOrder(
                     OrderModel(
-                        total = total,
-                        quantity = quantity,
-                        where = where,
-                        coffeeCup = coffeeCup,
-                        collectTime = collectTime
-                    )
-                )
+                        coffee = coffee, total = total, quantity = quantity, where = where,
+                        coffeeCup = coffeeCup, request = request, collectTime = collectTime))
+
                 activity!!.supportFragmentManager.beginTransaction()
                     .replace(R.id.homeFrame, ReceiptsFragment.newInstance())
                     .addToBackStack(null)
                     .commit()
-            }
-            else{
+            } else {
                 layout.asterisk01.visibility = View.VISIBLE
                 layout.asterisk02.visibility = View.VISIBLE
                 layout.asterisk03.visibility = View.VISIBLE
@@ -108,8 +96,9 @@ class ViewOrderFragment : Fragment(), AnkoLogger {
         }
     }
 
+
     private fun writeNewOrder(order:OrderModel){
-        val uid = app.auth.currentUser!!.uid
+        val uid = app.currentUser!!.uid
         val key = app.database.child("orders").push().key
         order.uid = key
         val orderValues = order.toMap()

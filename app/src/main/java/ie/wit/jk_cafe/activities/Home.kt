@@ -7,15 +7,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -26,7 +25,6 @@ import ie.wit.jk_cafe.main.MainActivity
 import ie.wit.jk_cafe.signUp_logIn.LoginActivity
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.app_bar_home.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.home.*
 import kotlinx.android.synthetic.main.nav_header_home.view.*
 import org.jetbrains.anko.AnkoLogger
@@ -63,7 +61,11 @@ class Home : AppCompatActivity(), AnkoLogger,
             }
 
             navView.setNavigationItemSelectedListener(this)
-            navView.getHeaderView(0).headerEmail.text = app.auth.currentUser?.email
+            if(app.currentUser.email != null)
+            navView.getHeaderView(0).headerEmail.text = app.currentUser.email
+            else
+            navView.getHeaderView(0).headerEmail.text = "No Email Specified..."
+
             navView.getHeaderView(0).imageView.setOnClickListener {
                 showImagePicker(this, 1)
             }
@@ -77,7 +79,7 @@ class Home : AppCompatActivity(), AnkoLogger,
             toggle.syncState()
 
             ft = supportFragmentManager.beginTransaction()
-            val fragment = HomeFragment.newInstance()
+            val fragment = FragmentHome.newInstance()
             ft.replace(R.id.homeFrame, fragment)
             ft.commit()
         }
@@ -85,8 +87,9 @@ class Home : AppCompatActivity(), AnkoLogger,
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
             when (item.itemId) {
-                R.id.nav_home -> navigateTo(HomeFragment.newInstance())
+                R.id.nav_home -> navigateTo(FragmentHome.newInstance())
                 R.id.nav_receipts -> navigateTo(ReceiptsFragment.newInstance())
+                R.id.nav_map -> navigateTo(MapsFragment.newInstance())
                 R.id.nav_about -> navigateTo(AboutFragment.newInstance())
                 R.id.nav_logout -> onLogOut()
 
@@ -125,7 +128,7 @@ class Home : AppCompatActivity(), AnkoLogger,
         override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
             when (item.itemId) {
-                R.id.action_home -> navigateTo(HomeFragment.newInstance())
+                R.id.action_home -> navigateTo(MapsFragment.newInstance())
 
                 R.id.action_order -> {
                     val currentTime = LocalTime.now()
@@ -158,10 +161,9 @@ class Home : AppCompatActivity(), AnkoLogger,
         }
 
         private fun onLogOut(){
-            FirebaseAuth.getInstance().signOut()
-            app.googleSignInClient.signOut()
-            toast("Logged Out")
+            AuthUI.getInstance().signOut(this)
             startActivity(Intent(this, LoginActivity::class.java))
+            toast("Logged Out")
             finish()
         }
 

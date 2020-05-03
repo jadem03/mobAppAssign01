@@ -12,10 +12,12 @@ import java.time.LocalDateTime
 @Parcelize
 data class OrderModel(
     var uid: String? = "",
+    var coffee: String = "",
     var quantity: Int = 0,
     var editText: String = "",
     var coffeeCup: String = "N/A",
     var where: String = " ",
+    var request: String = "",
     var collectTime: String = " ",
     var total: String = ""): Parcelable
 {
@@ -24,10 +26,12 @@ data class OrderModel(
     {
         return mapOf(
             "uid" to uid,
+            "coffee" to coffee,
             "quantity" to quantity,
             "editText" to editText,
             "coffeeCup" to coffeeCup,
             "where" to where,
+            "requests" to request,
             "collectTime" to collectTime,
             "total" to total
         )

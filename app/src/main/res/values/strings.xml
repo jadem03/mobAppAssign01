@@ -93,6 +93,24 @@
     <string name="fill_all_fields">* Fill in all Fields</string>
     <string name="asterisk">*</string>
 
-
     <string name="cafe_location">JK Café locations</string>
+
+    <string name="sign_in_google">Sign In with Google</string>
+    <string name="sign_in_email">Sign In with Email</string>
+    <string name="sign_in_phone">Sign In with Phone</string>
+    <string name="desc_firebase_lockup">firebase look up</string>
+    <string name="choose_cafe">Search below for the JK Café near you</string>
+    <string name="notes">Requests....</string>
+    <string name="type">Coffee</string>
+    <string name="map">Find a Cafe</string>
+    <string name="loyalty_card">Your loyalty Card:</string>
+
+    <string-array name="coffeeType_array">
+        <item>Americano</item>
+        <item>Latte</item>
+        <item>Cappacino</item>
+        <item>Flat White</item>
+        <item>Hot Chocolate</item>
+        <item>Tea</item>
+    </string-array>
 </resources>

@@ -16,37 +16,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:layout_marginBottom="20dp"
-        android:layout_gravity="center"
-        android:textColor="@color/colorPrimary"
-        android:text="@string/welcome"
-        android:textSize="20sp" />
-
-    <ImageView
-        android:id="@+id/coffee_cup"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:contentDescription="@string/order"
-        android:src="@mipmap/coffee_cup02" />
-
-    <Button
-        android:id="@+id/orderCoffeeBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:background="@color/colorPrimary"
-        android:text="@string/coffee"
-        android:textSize="14sp"
-        android:textColor="@color/colorWhite"
-        android:textColorHighlight="@color/colorPrimaryDark" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/welcome"
+            android:textSize="20sp" />
 
     </LinearLayout>
 </ScrollView>
