@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Callback
@@ -34,6 +35,7 @@ import java.time.LocalTime
 
 class Home : AppCompatActivity(), AnkoLogger,
 
+    BottomNavigationView.OnNavigationItemSelectedListener,
     NavigationView.OnNavigationItemSelectedListener
     {
         lateinit var ft: FragmentTransaction
@@ -78,6 +80,10 @@ class Home : AppCompatActivity(), AnkoLogger,
             drawerLayout.addDrawerListener(toggle)
             toggle.syncState()
 
+            val navView: BottomNavigationView = findViewById(R.id.bottomNav)
+            navView.setOnNavigationItemSelectedListener(this)
+            navView.selectedItemId = R.id.nav_order
+
             ft = supportFragmentManager.beginTransaction()
             val fragment = FragmentHome.newInstance()
             ft.replace(R.id.homeFrame, fragment)
@@ -85,6 +91,13 @@ class Home : AppCompatActivity(), AnkoLogger,
         }
 
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
+            val navView: BottomNavigationView = findViewById(R.id.bottomNav)
+            navView.setOnNavigationItemSelectedListener(this)
+            when (item.itemId) {
+                R.id.nav_order -> navigateTo(OrderFragment.newInstance())
+                R.id.nav_receipts -> navigateTo(ReceiptsFragment.newInstance())
+                R.id.nav_map -> navigateTo(MapsFragment.newInstance())
+            }
 
             when (item.itemId) {
                 R.id.nav_home -> navigateTo(FragmentHome.newInstance())
